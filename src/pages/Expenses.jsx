@@ -225,20 +225,20 @@ export default function Expenses() {
           <div className="overflow-auto max-h-[70vh]">
             <table className="text-sm border-collapse">
               <thead>
-                <tr className="bg-plum/5 text-left text-ink/50 font-mono text-xs uppercase">
-                  <th className="px-4 py-3 sticky top-0 left-0 z-30 bg-plum/5 whitespace-nowrap border-r border-b border-plum/10">
+                <tr className="bg-[#F4EFF1] text-left text-ink/50 font-mono text-xs uppercase">
+                  <th className="px-4 py-3 sticky top-0 left-0 z-30 bg-[#F4EFF1] whitespace-nowrap border-r border-b border-plum/10">
                     Date
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum/5 border-b border-plum/10 whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 whitespace-nowrap">
                     Type
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum/5 border-b border-plum/10 whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 whitespace-nowrap">
                     Description
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum/5 border-b border-plum/10 text-right whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 text-right whitespace-nowrap">
                     Amount
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum/5 border-b border-plum/10 whitespace-nowrap"></th>
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 whitespace-nowrap"></th>
                 </tr>
               </thead>
               <tbody>
