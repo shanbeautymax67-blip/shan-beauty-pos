@@ -35,14 +35,15 @@ export default function AddStockModal({ product, onClose, onConfirm }) {
         <div className="flex items-center gap-2 mb-2">
           <button
             type="button"
-            onClick={() => setQuantity((q) => Math.max(1, Number(q) - 1))}
+            onClick={() => setQuantity((q) => Math.max(0.01, Number(q) - 1))}
             className="w-9 h-9 rounded-lg bg-plum/5 text-plum hover:bg-plum/10 font-semibold"
           >
             −
           </button>
           <input
             type="number"
-            min="1"
+            step="0.01"
+            min="0.01"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
             className="flex-1 text-center rounded-lg border border-plum/15 py-2 focus:outline-none focus:ring-2 focus:ring-berry"

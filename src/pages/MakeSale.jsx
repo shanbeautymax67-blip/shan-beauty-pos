@@ -60,13 +60,31 @@ export default function MakeSale() {
     return filtered.slice(start, start + PAGE_SIZE);
   }, [filtered, page]);
 
+  function round2(n) {
+    return Math.round((Number(n) + Number.EPSILON) * 100) / 100;
+  }
+
   function addToCart(product) {
+    const stock = Number(product.stock);
+    if (stock <= 0) return;
+    // Whole units add 1 at a time. When less than one full unit remains
+    // (e.g. 0.5 left), add exactly what's left rather than a full 1.
+    const increment = stock < 1 ? stock : 1;
+
     setCart((prev) => {
       const existing = prev.find((i) => i.product_id === product.id);
+      const currentQty = existing ? existing.quantity : 0;
+      if (currentQty >= stock) {
+        setMessage({
+          type: "error",
+          text: `Only ${stock} ${product.name} in stock — can't add more.`,
+        });
+        return prev;
+      }
+      const newQty = round2(Math.min(currentQty + increment, stock));
+
       if (existing) {
-        return prev.map((i) =>
-          i.product_id === product.id ? { ...i, quantity: i.quantity + 1 } : i
-        );
+        return prev.map((i) => (i.product_id === product.id ? { ...i, quantity: newQty } : i));
       }
       return [
         ...prev,
@@ -75,18 +93,30 @@ export default function MakeSale() {
           name: product.name,
           price: Number(product.price),
           cost: Number(product.buying_price || 0),
-          quantity: 1,
+          quantity: newQty,
         },
       ];
     });
   }
 
   function updateQty(product_id, quantity) {
-    if (quantity <= 0) {
+    const numQty = Number(quantity);
+    if (!numQty || numQty <= 0) {
       setCart((prev) => prev.filter((i) => i.product_id !== product_id));
       return;
     }
-    setCart((prev) => prev.map((i) => (i.product_id === product_id ? { ...i, quantity } : i)));
+    const product = products.find((p) => p.id === product_id);
+    const stock = product ? Number(product.stock) : Infinity;
+    if (numQty > stock) {
+      setMessage({
+        type: "error",
+        text: `Only ${stock} ${product ? product.name : "in stock"} — can't add more.`,
+      });
+    }
+    const cappedQty = round2(Math.min(numQty, stock));
+    setCart((prev) =>
+      prev.map((i) => (i.product_id === product_id ? { ...i, quantity: cappedQty } : i))
+    );
   }
 
   function removeItem(product_id) {
@@ -376,38 +406,54 @@ export default function MakeSale() {
             <p className="text-sm text-ink/40 py-8 text-center">Tap a product to add it here.</p>
           ) : (
             <div className="space-y-4">
-              {cart.map((item) => (
-                <div key={item.product_id} className="flex items-start justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-ink truncate">{item.name}</p>
-                    <div className="flex items-center gap-2 mt-1.5">
-                      <button
-                        onClick={() => updateQty(item.product_id, item.quantity - 1)}
-                        className="w-6 h-6 rounded-md bg-plum/5 text-ink hover:bg-plum/10 text-sm"
-                      >
-                        −
-                      </button>
-                      <span className="text-sm text-ink/70 w-5 text-center">{item.quantity}</span>
-                      <button
-                        onClick={() => updateQty(item.product_id, item.quantity + 1)}
-                        className="w-6 h-6 rounded-md bg-plum/5 text-ink hover:bg-plum/10 text-sm"
-                      >
-                        +
-                      </button>
-                      <span className="text-xs text-ink/40 ml-1">@ {money(item.price)}</span>
-                      <button
-                        onClick={() => removeItem(item.product_id)}
-                        className="ml-auto text-xs text-berry-dark hover:text-berry"
-                      >
-                        remove
-                      </button>
+              {cart.map((item) => {
+                const stockProduct = products.find((p) => p.id === item.product_id);
+                const maxStock = stockProduct ? Number(stockProduct.stock) : Infinity;
+                return (
+                  <div key={item.product_id} className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-ink truncate">{item.name}</p>
+                      <div className="flex items-center gap-2 mt-1.5">
+                        <button
+                          onClick={() => updateQty(item.product_id, round2(item.quantity - 1))}
+                          className="w-6 h-6 rounded-md bg-plum/5 text-ink hover:bg-plum/10 text-sm"
+                        >
+                          −
+                        </button>
+                        <input
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          max={maxStock}
+                          value={item.quantity}
+                          onChange={(e) => updateQty(item.product_id, e.target.value)}
+                          className="w-14 text-center text-sm text-ink/70 rounded-md border border-plum/15 py-0.5 focus:outline-none focus:ring-2 focus:ring-berry"
+                        />
+                        <button
+                          onClick={() => updateQty(item.product_id, round2(item.quantity + 1))}
+                          disabled={item.quantity >= maxStock}
+                          className="w-6 h-6 rounded-md bg-plum/5 text-ink hover:bg-plum/10 text-sm disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
+                          +
+                        </button>
+                        <span className="text-xs text-ink/40 ml-1">@ {money(item.price)}</span>
+                        <button
+                          onClick={() => removeItem(item.product_id)}
+                          className="ml-auto text-xs text-berry-dark hover:text-berry"
+                        >
+                          remove
+                        </button>
+                      </div>
+                      {maxStock !== Infinity && (
+                        <p className="text-[11px] text-ink/30 mt-1">{maxStock} in stock</p>
+                      )}
                     </div>
+                    <p className="font-mono text-sm text-ink whitespace-nowrap pt-0.5">
+                      {money(item.price * item.quantity)}
+                    </p>
                   </div>
-                  <p className="font-mono text-sm text-ink whitespace-nowrap pt-0.5">
-                    {money(item.price * item.quantity)}
-                  </p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

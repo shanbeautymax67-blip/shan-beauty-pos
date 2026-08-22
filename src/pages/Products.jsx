@@ -251,7 +251,7 @@ export default function Products() {
           <input
             required
             type="number"
-            step="1"
+            step="0.01"
             min="0"
             value={form.stock}
             onChange={(e) => setForm({ ...form, stock: e.target.value })}
@@ -375,20 +375,32 @@ export default function Products() {
         </p>
       ) : (
         <div className="bg-white border border-plum/10 rounded-xl overflow-hidden">
-          <div className="overflow-x-auto">
+          <div className="overflow-auto max-h-[70vh]">
             <table className="text-sm border-collapse">
               <thead>
                 <tr className="bg-plum/5 text-left text-ink/50 font-mono text-xs uppercase">
-                  <th className="px-4 py-3 sticky left-0 z-10 bg-plum/5 border-r border-plum/10 w-40">
+                  <th className="px-4 py-3 sticky top-0 left-0 z-30 bg-plum/5 border-r border-b border-plum/10 w-40">
                     Name
                   </th>
-                  <th className="px-4 py-3 whitespace-nowrap">Category</th>
-                  <th className="px-4 py-3 text-right whitespace-nowrap">Buying Price</th>
-                  <th className="px-4 py-3 text-right whitespace-nowrap">Selling Price</th>
-                  <th className="px-4 py-3 text-right whitespace-nowrap">Margin</th>
-                  <th className="px-4 py-3 text-right whitespace-nowrap">Stock</th>
-                  <th className="px-4 py-3 text-right whitespace-nowrap">Reorder Level</th>
-                  <th className="px-4 py-3 whitespace-nowrap"></th>
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum/5 border-b border-plum/10 whitespace-nowrap">
+                    Category
+                  </th>
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum/5 border-b border-plum/10 text-right whitespace-nowrap">
+                    Buying Price
+                  </th>
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum/5 border-b border-plum/10 text-right whitespace-nowrap">
+                    Selling Price
+                  </th>
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum/5 border-b border-plum/10 text-right whitespace-nowrap">
+                    Margin
+                  </th>
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum/5 border-b border-plum/10 text-right whitespace-nowrap">
+                    Stock
+                  </th>
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum/5 border-b border-plum/10 text-right whitespace-nowrap">
+                    Reorder Level
+                  </th>
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum/5 border-b border-plum/10 whitespace-nowrap"></th>
                 </tr>
               </thead>
               <tbody>
