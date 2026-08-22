@@ -136,7 +136,7 @@ export default function Reports() {
             className={`px-4 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wide border ${
               mode === m.id
                 ? "bg-plum text-ivory border-plum"
-                : "border-plum/15 text-ink/60 hover:border-plum/30"
+                : "border-plum/15 text-ink hover:border-plum/30"
             }`}
           >
             {m.label}
@@ -211,14 +211,14 @@ export default function Reports() {
         <p className="text-ink/50 text-sm">Loading…</p>
       ) : (
         <>
-          <p className="font-mono text-xs text-ink/40 uppercase tracking-widest mb-3">{label}</p>
+          <p className="font-mono text-xs text-ink uppercase tracking-widest mb-3">{label}</p>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-2">
             <StatCard label="Sales" value={result.saleCount} />
-            <StatCard label="Revenue" value={money(result.revenue)} />
+            <StatCard label="Total Sales" value={money(result.revenue)} />
             <StatCard label="Gross Profit" value={money(grossProfit)} tone="green" />
             <StatCard label="Expenses" value={money(result.expensesTotal)} tone="berry" />
-            <StatCard label="Net Profit" value={money(netProfit)} tone={netProfit >= 0 ? "green" : "berry"} accent />
+            <StatCard label="Net Profit" value={money(netProfit)} tone={netProfit >= 0 ? "green" : "berry"} />
           </div>
           <p className="text-xs text-ink/40 mb-6">
             Net profit deducts {result.expenseNote}.
@@ -229,12 +229,12 @@ export default function Reports() {
               <h2 className="font-display text-lg text-plum mb-3">Payment Split</h2>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-ink/60">Cash</span>
-                  <span className="font-mono text-ink">{money(result.cashTotal)}</span>
+                  <span className="text-ink">Cash</span>
+                  <span className="font-mono text-green-700">{money(result.cashTotal)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-ink/60">M-Pesa</span>
-                  <span className="font-mono text-ink">{money(result.mpesaTotal)}</span>
+                  <span className="text-ink">M-Pesa</span>
+                  <span className="font-mono text-green-700">{money(result.mpesaTotal)}</span>
                 </div>
               </div>
             </div>
@@ -251,8 +251,10 @@ export default function Reports() {
                         <span className="font-mono text-ink/30 mr-2">{idx + 1}.</span>
                         {item.name}
                       </span>
-                      <span className="font-mono text-ink/60 whitespace-nowrap ml-2">
-                        {item.qty} · {money(item.revenue)}
+                      <span className="font-mono whitespace-nowrap ml-2">
+                        <span className="text-ink">{item.qty}</span>{" "}
+                        <span className="text-ink">·</span>{" "}
+                        <span className="text-green-700">{money(item.revenue)}</span>
                       </span>
                     </div>
                   ))}
@@ -266,23 +268,13 @@ export default function Reports() {
   );
 }
 
-function StatCard({ label, value, tone, accent }) {
+function StatCard({ label, value, tone }) {
   const toneClass =
     tone === "green" ? "text-green-700" : tone === "berry" ? "text-berry-dark" : "text-ink";
   return (
-    <div
-      className={`rounded-xl p-4 border ${
-        accent ? "bg-plum text-ivory border-plum" : "bg-white border-plum/10"
-      }`}
-    >
-      <p
-        className={`text-xs font-mono uppercase tracking-wide mb-1 ${
-          accent ? "text-blush/70" : "text-ink/40"
-        }`}
-      >
-        {label}
-      </p>
-      <p className={`font-display text-xl ${accent ? "text-ivory" : toneClass}`}>{value}</p>
+    <div className="rounded-xl p-4 border bg-white border-plum/10">
+      <p className="text-xs font-mono uppercase tracking-wide mb-1 text-ink">{label}</p>
+      <p className={`font-display text-xl ${toneClass}`}>{value}</p>
     </div>
   );
 }

@@ -317,6 +317,8 @@ export default function MakeSale() {
             {paginated.map((p) => {
               const outOfStock = Number(p.stock) <= 0;
               const shopAStock = Number(p.shop_a_stock || 0);
+              const reorderLevel = p.reorder_level ?? 5;
+              const stockOk = Number(p.stock) > reorderLevel;
               return (
                 <div
                   key={p.id}
@@ -331,8 +333,12 @@ export default function MakeSale() {
                     className={`w-full text-left p-4 ${outOfStock ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
                     <p className="font-medium text-ink text-sm leading-snug mb-1">{p.name}</p>
-                    <p className="font-mono text-berry-dark text-sm">{money(p.price)}</p>
-                    <p className="text-[11px] text-ink/40 mt-1">
+                    <p className="font-mono text-green-700 text-sm">{money(p.price)}</p>
+                    <p
+                      className={`text-[11px] mt-1 font-medium ${
+                        outOfStock || !stockOk ? "text-berry-dark" : "text-green-700"
+                      }`}
+                    >
                       {outOfStock ? "Out of stock" : `${p.stock} in stock`}
                       {shopAStock > 0 && ` · ${shopAStock} at Shop A`}
                     </p>
@@ -342,7 +348,7 @@ export default function MakeSale() {
                       <button
                         type="button"
                         onClick={() => setTransfer({ product: p, direction: "to_shop_a" })}
-                        className="flex-1 text-[10px] font-mono uppercase tracking-wide text-plum/60 hover:text-plum py-1 rounded hover:bg-plum/5"
+                        className="flex-1 text-[10px] font-mono uppercase tracking-wide text-ink py-1 rounded bg-red-50 hover:bg-red-100"
                       >
                         Send to Shop A
                       </button>
@@ -351,7 +357,7 @@ export default function MakeSale() {
                       <button
                         type="button"
                         onClick={() => setTransfer({ product: p, direction: "from_shop_a" })}
-                        className="flex-1 text-[10px] font-mono uppercase tracking-wide text-berry-dark hover:text-berry py-1 rounded hover:bg-berry/5"
+                        className="flex-1 text-[10px] font-mono uppercase tracking-wide text-ink py-1 rounded bg-green-50 hover:bg-green-100"
                       >
                         Bring from Shop A
                       </button>
@@ -477,7 +483,7 @@ export default function MakeSale() {
           </div>
 
           <div>
-            <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">
+            <label className="block text-xs font-mono text-ink mb-1 uppercase">
               Discount (KES)
             </label>
             <input
@@ -504,7 +510,7 @@ export default function MakeSale() {
                 className={`rounded-lg py-2 text-xs font-mono uppercase tracking-wide border ${
                   payment === method.id
                     ? "bg-plum text-ivory border-plum"
-                    : "border-plum/15 text-ink/60 hover:border-plum/30"
+                    : "border-plum/15 text-ink hover:border-plum/30"
                 }`}
               >
                 {method.label}
@@ -514,7 +520,7 @@ export default function MakeSale() {
 
           {payment !== "split" ? (
             <div>
-              <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">
+              <label className="block text-xs font-mono text-ink mb-1 uppercase">
                 Amount Paid
               </label>
               <input
@@ -530,7 +536,7 @@ export default function MakeSale() {
           ) : (
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">Cash</label>
+                <label className="block text-xs font-mono text-ink mb-1 uppercase">Cash</label>
                 <input
                   type="number"
                   min="0"
@@ -542,7 +548,7 @@ export default function MakeSale() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">M-Pesa</label>
+                <label className="block text-xs font-mono text-ink mb-1 uppercase">M-Pesa</label>
                 <input
                   type="number"
                   min="0"

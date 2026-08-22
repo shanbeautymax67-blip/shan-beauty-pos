@@ -143,7 +143,7 @@ export default function Expenses() {
         className="bg-white border border-plum/10 rounded-xl p-5 mb-6 grid grid-cols-1 sm:grid-cols-5 gap-3 items-end"
       >
         <div className="sm:col-span-2">
-          <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">Description</label>
+          <label className="block text-xs font-mono text-ink mb-1 uppercase">Description</label>
           <input
             required
             value={form.description}
@@ -153,7 +153,7 @@ export default function Expenses() {
           />
         </div>
         <div>
-          <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">Type</label>
+          <label className="block text-xs font-mono text-ink mb-1 uppercase">Type</label>
           <select
             value={form.expense_type}
             onChange={(e) => setForm({ ...form, expense_type: e.target.value })}
@@ -164,7 +164,7 @@ export default function Expenses() {
           </select>
         </div>
         <div>
-          <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">Amount (KES)</label>
+          <label className="block text-xs font-mono text-ink mb-1 uppercase">Amount (KES)</label>
           <input
             required
             type="number"
@@ -176,7 +176,7 @@ export default function Expenses() {
           />
         </div>
         <div>
-          <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">
+          <label className="block text-xs font-mono text-ink mb-1 uppercase">
             Date {form.expense_type === "monthly" && <span className="normal-case text-ink/30">(month used)</span>}
           </label>
           <input
@@ -208,11 +208,11 @@ export default function Expenses() {
       </form>
 
       {!loading && (
-        <p className="font-mono text-sm text-ink/60 mb-4">
+        <p className="font-mono text-sm text-ink mb-4">
           {expenses.length} expense{expenses.length !== 1 ? "s" : ""} this month · daily{" "}
-          <span className="text-berry-dark font-semibold">{money(dailyTotal)}</span> · monthly{" "}
-          <span className="text-berry-dark font-semibold">{money(monthlyTypeTotal)}</span> · total{" "}
-          <span className="text-berry-dark font-semibold">{money(monthTotal)}</span>
+          <span className="text-red-600 font-semibold">{money(dailyTotal)}</span> · monthly{" "}
+          <span className="text-red-600 font-semibold">{money(monthlyTypeTotal)}</span> · total{" "}
+          <span className="text-red-600 font-semibold">{money(monthTotal)}</span>
         </p>
       )}
 
@@ -225,26 +225,26 @@ export default function Expenses() {
           <div className="overflow-auto max-h-[70vh]">
             <table className="text-sm border-collapse">
               <thead>
-                <tr className="bg-[#F4EFF1] text-left text-ink/50 font-mono text-xs uppercase">
-                  <th className="px-4 py-3 sticky top-0 left-0 z-30 bg-[#F4EFF1] whitespace-nowrap border-r border-b border-plum/10">
+                <tr className="bg-blush text-left text-ink font-mono text-xs uppercase">
+                  <th className="px-4 py-3 sticky top-0 left-0 z-30 bg-blush whitespace-nowrap border-r border-b border-plum/10">
                     Date
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 whitespace-nowrap">
                     Type
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 whitespace-nowrap">
                     Description
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 text-right whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 text-right whitespace-nowrap">
                     Amount
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 whitespace-nowrap"></th>
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 whitespace-nowrap"></th>
                 </tr>
               </thead>
               <tbody>
                 {paginated.map((exp) => (
                   <tr key={exp.id} className="border-t border-plum/5">
-                    <td className="px-4 py-3 font-mono text-xs text-ink/60 sticky left-0 z-10 bg-white whitespace-nowrap border-r border-plum/10">
+                    <td className="px-4 py-3 font-mono text-xs text-ink sticky left-0 z-10 bg-white whitespace-nowrap border-r border-plum/10">
                       {new Date(exp.expense_date + "T00:00:00").toLocaleDateString("en-KE", {
                         day: "numeric",
                         month: "short",
@@ -263,7 +263,7 @@ export default function Expenses() {
                       </span>
                     </td>
                     <td className="px-4 py-3 text-ink whitespace-nowrap">{exp.description}</td>
-                    <td className="px-4 py-3 text-right font-mono text-berry-dark whitespace-nowrap">
+                    <td className="px-4 py-3 text-right font-mono text-red-600 whitespace-nowrap">
                       {money(exp.amount)}
                     </td>
                     <td className="px-4 py-3 text-right space-x-3 whitespace-nowrap">

@@ -39,7 +39,7 @@ export default function CrossShop() {
           className="rounded-lg border border-plum/15 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-berry"
         />
       </div>
-      <p className="text-sm text-ink/50 mb-6">
+      <p className="text-sm text-ink mb-6">
         {new Date(date + "T00:00:00").toLocaleDateString("en-KE", { dateStyle: "long" })}
       </p>
 
@@ -50,9 +50,9 @@ export default function CrossShop() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="bg-white border border-plum/10 rounded-xl overflow-hidden">
-            <div className="bg-plum/5 px-4 py-3">
-              <h2 className="font-display text-base text-plum">Sent to Shop A</h2>
-              <p className="text-xs text-ink/40 font-mono">{sentOut.length} transfer{sentOut.length !== 1 ? "s" : ""}</p>
+            <div className="bg-red-50 px-4 py-3">
+              <h2 className="font-display text-base text-ink">Sent to Shop A</h2>
+              <p className="text-xs text-ink font-mono">{sentOut.length} transfer{sentOut.length !== 1 ? "s" : ""}</p>
             </div>
             {sentOut.length === 0 ? (
               <p className="text-sm text-ink/40 px-4 py-4">Nothing sent out on this day.</p>
@@ -62,11 +62,11 @@ export default function CrossShop() {
                   <div key={t.id} className="px-4 py-3 flex items-center justify-between text-sm">
                     <div>
                       <p className="text-ink font-medium">{t.product_name}</p>
-                      <p className="text-xs text-ink/40 font-mono">
+                      <p className="text-xs text-ink font-mono">
                         {new Date(t.created_at).toLocaleTimeString("en-KE", { timeStyle: "short" })}
                       </p>
                     </div>
-                    <span className="font-mono text-plum/70">−{t.quantity}</span>
+                    <span className="font-mono text-red-600">−{t.quantity}</span>
                   </div>
                 ))}
               </div>
@@ -74,9 +74,9 @@ export default function CrossShop() {
           </div>
 
           <div className="bg-white border border-plum/10 rounded-xl overflow-hidden">
-            <div className="bg-plum/5 px-4 py-3">
-              <h2 className="font-display text-base text-plum">Brought from Shop A</h2>
-              <p className="text-xs text-ink/40 font-mono">{broughtIn.length} transfer{broughtIn.length !== 1 ? "s" : ""}</p>
+            <div className="bg-green-50 px-4 py-3">
+              <h2 className="font-display text-base text-ink">Brought from Shop A</h2>
+              <p className="text-xs text-ink font-mono">{broughtIn.length} transfer{broughtIn.length !== 1 ? "s" : ""}</p>
             </div>
             {broughtIn.length === 0 ? (
               <p className="text-sm text-ink/40 px-4 py-4">Nothing brought in on this day.</p>
@@ -86,11 +86,11 @@ export default function CrossShop() {
                   <div key={t.id} className="px-4 py-3 flex items-center justify-between text-sm">
                     <div>
                       <p className="text-ink font-medium">{t.product_name}</p>
-                      <p className="text-xs text-ink/40 font-mono">
+                      <p className="text-xs text-ink font-mono">
                         {new Date(t.created_at).toLocaleTimeString("en-KE", { timeStyle: "short" })}
                       </p>
                     </div>
-                    <span className="font-mono text-berry-dark">+{t.quantity}</span>
+                    <span className="font-mono text-green-700">+{t.quantity}</span>
                   </div>
                 ))}
               </div>

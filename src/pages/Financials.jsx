@@ -128,13 +128,12 @@ export default function Financials() {
       ) : (
         <>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-            <StatCard label="Revenue" value={money(data.revenue)} />
-            <StatCard label="Cost of Goods" value={money(data.cogs)} />
+            <StatCard label="Total Sales" value={money(data.revenue)} />
             <StatCard label="Gross Profit" value={money(grossProfit)} tone="green" />
             <StatCard label="Daily Expenses" value={money(dailyExpenses)} tone="berry" />
-            <StatCard label="Net Profit" value={money(netProfit)} tone={netProfit >= 0 ? "green" : "berry"} accent />
-            <StatCard label="Cash Total" value={money(data.cashTotal)} />
-            <StatCard label="M-Pesa Total" value={money(data.mpesaTotal)} />
+            <StatCard label="Net Profit" value={money(netProfit)} tone={netProfit >= 0 ? "green" : "berry"} />
+            <StatCard label="Cash Total" value={money(data.cashTotal)} tone="green" />
+            <StatCard label="M-Pesa Total" value={money(data.mpesaTotal)} tone="green" />
             <StatCard label="Sales Recorded" value={data.saleCount} />
           </div>
 
@@ -146,11 +145,11 @@ export default function Financials() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
               <div className="rounded-lg border border-plum/10 p-3">
-                <p className="text-xs font-mono text-ink/40 uppercase mb-1">Cash Left — Yesterday</p>
+                <p className="text-xs font-mono text-ink uppercase mb-1">Cash Left — Yesterday</p>
                 <p className="font-display text-lg text-ink">{money(cashLeftYesterday)}</p>
               </div>
               <div className="rounded-lg border border-plum/10 p-3">
-                <p className="text-xs font-mono text-ink/40 uppercase mb-1">
+                <p className="text-xs font-mono text-ink uppercase mb-1">
                   Cash Left — {isToday ? "Today" : "This Day"}
                 </p>
                 <div className="flex items-center gap-2">
@@ -171,18 +170,18 @@ export default function Financials() {
                   </button>
                 </div>
                 {cashLeftToday !== Number(cashLeftInput || 0) && (
-                  <p className="text-[11px] text-ink/40 mt-1">Saved: {money(cashLeftToday)}</p>
+                  <p className="text-[11px] text-ink mt-1">Saved: {money(cashLeftToday)}</p>
                 )}
               </div>
             </div>
 
             <div className="space-y-2 text-sm border-t border-plum/10 pt-4">
               <div className="flex justify-between">
-                <span className="text-ink/60">Cash Made Today</span>
+                <span className="text-ink">Cash Made Today</span>
                 <span className="font-mono text-ink">{money(data.cashTotal)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-ink/60">+ Yesterday's Cash Left</span>
+                <span className="text-ink">+ Yesterday's Cash Left</span>
                 <span className="font-mono text-ink">{money(cashLeftYesterday)}</span>
               </div>
               <div className="flex justify-between font-semibold pt-2 border-t border-plum/10">
@@ -190,7 +189,7 @@ export default function Financials() {
                 <span className="font-mono text-plum">{money(cashForToday)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-ink/60">− Today's Cash Left (set aside for tomorrow)</span>
+                <span className="text-ink">− Today's Cash Left (set aside for tomorrow)</span>
                 <span className="font-mono text-ink">{money(cashLeftToday)}</span>
               </div>
               <div className="flex justify-between font-semibold pt-2 border-t border-plum/10">
@@ -211,23 +210,13 @@ export default function Financials() {
   );
 }
 
-function StatCard({ label, value, tone, accent }) {
+function StatCard({ label, value, tone }) {
   const toneClass =
     tone === "green" ? "text-green-700" : tone === "berry" ? "text-berry-dark" : "text-ink";
   return (
-    <div
-      className={`rounded-xl p-4 border ${
-        accent ? "bg-plum text-ivory border-plum" : "bg-white border-plum/10"
-      }`}
-    >
-      <p
-        className={`text-xs font-mono uppercase tracking-wide mb-1 ${
-          accent ? "text-blush/70" : "text-ink/40"
-        }`}
-      >
-        {label}
-      </p>
-      <p className={`font-display text-xl ${accent ? "text-ivory" : toneClass}`}>{value}</p>
+    <div className="rounded-xl p-4 border bg-white border-plum/10">
+      <p className="text-xs font-mono uppercase tracking-wide mb-1 text-ink">{label}</p>
+      <p className={`font-display text-xl ${toneClass}`}>{value}</p>
     </div>
   );
 }

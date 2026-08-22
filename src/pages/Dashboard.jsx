@@ -139,16 +139,21 @@ export default function Dashboard({ setTab }) {
       <h1 className="font-display text-2xl text-plum mb-6">Today {todayLabel}</h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Sales Today" value={today.saleCount} accent />
-        <StatCard label="Revenue" value={money(today.revenue)} accent />
-        <StatCard label="Net Profit" value={money(today.profit)} accent />
+        <StatCard label="Sales Today" value={today.saleCount} boldLabel />
+        <StatCard label="Total Sales" value={money(today.revenue)} boldLabel />
+        <StatCard
+          label="Net Profit"
+          value={money(today.profit)}
+          tone={today.profit >= 0 ? "green" : "berry"}
+          boldLabel
+        />
         <CashMpesaCard cash={today.cashTotal} mpesa={today.mpesaTotal} />
       </div>
 
       <h2 className="font-display text-xl text-plum mb-4">This Month — {monthName}</h2>
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-10">
         <StatCard label="Sales" value={monthly.saleCount} />
-        <StatCard label="Revenue" value={money(monthly.revenue)} />
+        <StatCard label="Total Sales" value={money(monthly.revenue)} />
         <StatCard label="Gross Profit" value={money(monthly.grossProfit)} tone="green" />
         <StatCard label="Expenses" value={money(monthly.expensesTotal)} tone="berry" />
         <StatCard
@@ -221,23 +226,19 @@ export default function Dashboard({ setTab }) {
   );
 }
 
-function StatCard({ label, value, accent, tone }) {
+function StatCard({ label, value, tone, boldLabel }) {
   const toneClass =
     tone === "green" ? "text-green-700" : tone === "berry" ? "text-berry-dark" : "text-ink";
   return (
-    <div
-      className={`rounded-xl p-4 border ${
-        accent ? "bg-plum text-ivory border-plum" : "bg-white border-plum/10"
-      }`}
-    >
+    <div className="rounded-xl p-4 border bg-white border-plum/10">
       <p
         className={`text-xs font-mono uppercase tracking-wide mb-1 ${
-          accent ? "text-blush/70" : "text-ink/40"
+          boldLabel ? "text-ink" : "text-ink/40"
         }`}
       >
         {label}
       </p>
-      <p className={`font-display text-xl ${accent ? "text-ivory" : toneClass}`}>{value}</p>
+      <p className={`font-display text-xl ${toneClass}`}>{value}</p>
     </div>
   );
 }

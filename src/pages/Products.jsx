@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import AddStockModal from "../components/AddStockModal";
-import { exportProductsToExcel, parseProductsExcelFile } from "../lib/productsIO";
 import { fetchAllRows } from "../lib/fetchAll";
 
 const money = (n) => `KES ${Number(n).toFixed(2)}`;
@@ -27,10 +26,6 @@ export default function Products() {
   const [lowStockOnly, setLowStockOnly] = useState(false);
   const [stockTarget, setStockTarget] = useState(null); // product being restocked
   const [page, setPage] = useState(1);
-
-  const [importing, setImporting] = useState(false);
-  const [importSummary, setImportSummary] = useState(null);
-  const fileInputRef = useRef(null);
 
   async function loadProducts() {
     setLoading(true);
@@ -136,59 +131,6 @@ export default function Products() {
     return {};
   }
 
-  async function handleExport() {
-    await exportProductsToExcel(products);
-  }
-
-  async function handleImportFile(e) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setImporting(true);
-    setImportSummary(null);
-    try {
-      const { rows, errors } = await parseProductsExcelFile(file);
-      let inserted = 0;
-      if (rows.length > 0) {
-        // Insert in chunks so large imports don't hit a single request's
-        // payload/timeout limits.
-        const CHUNK_SIZE = 500;
-        for (let i = 0; i < rows.length; i += CHUNK_SIZE) {
-          const chunk = rows.slice(i, i + CHUNK_SIZE);
-          const { error } = await supabase.from("products").insert(chunk);
-          if (error) {
-            setImportSummary({
-              type: "error",
-              text:
-                inserted > 0
-                  ? `Imported ${inserted} product${inserted !== 1 ? "s" : ""} before an error: ${error.message}`
-                  : error.message,
-            });
-            setImporting(false);
-            await loadProducts();
-            if (fileInputRef.current) fileInputRef.current.value = "";
-            return;
-          }
-          inserted += chunk.length;
-        }
-      }
-      setImportSummary({
-        type: inserted > 0 ? "success" : "error",
-        text:
-          inserted > 0
-            ? `Imported ${inserted} product${inserted !== 1 ? "s" : ""}.${
-                errors.length > 0 ? ` ${errors.length} row(s) skipped.` : ""
-              }`
-            : "No valid rows found in the file.",
-        details: errors,
-      });
-      await loadProducts();
-    } catch (err) {
-      setImportSummary({ type: "error", text: `Could not read file: ${err.message}` });
-    }
-    setImporting(false);
-    if (fileInputRef.current) fileInputRef.current.value = "";
-  }
-
   return (
     <div className="p-6 max-w-5xl">
       <h1 className="font-display text-2xl text-plum mb-6">Products</h1>
@@ -198,7 +140,7 @@ export default function Products() {
         className="bg-white border border-plum/10 rounded-xl p-5 mb-6 grid grid-cols-1 sm:grid-cols-5 gap-3 items-end"
       >
         <div className="sm:col-span-2">
-          <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">Name</label>
+          <label className="block text-xs font-mono text-ink mb-1 uppercase">Name</label>
           <input
             required
             value={form.name}
@@ -208,7 +150,7 @@ export default function Products() {
           />
         </div>
         <div>
-          <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">Category</label>
+          <label className="block text-xs font-mono text-ink mb-1 uppercase">Category</label>
           <input
             list="product-categories"
             value={form.category}
@@ -223,7 +165,7 @@ export default function Products() {
           </datalist>
         </div>
         <div>
-          <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">Buying Price</label>
+          <label className="block text-xs font-mono text-ink mb-1 uppercase">Buying Price</label>
           <input
             type="number"
             step="0.01"
@@ -235,7 +177,7 @@ export default function Products() {
           />
         </div>
         <div>
-          <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">Selling Price</label>
+          <label className="block text-xs font-mono text-ink mb-1 uppercase">Selling Price</label>
           <input
             required
             type="number"
@@ -247,7 +189,7 @@ export default function Products() {
           />
         </div>
         <div>
-          <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">Stock</label>
+          <label className="block text-xs font-mono text-ink mb-1 uppercase">Stock</label>
           <input
             required
             type="number"
@@ -259,7 +201,7 @@ export default function Products() {
           />
         </div>
         <div>
-          <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">
+          <label className="block text-xs font-mono text-ink mb-1 uppercase">
             Reorder Level
           </label>
           <input
@@ -291,50 +233,6 @@ export default function Products() {
           </button>
         </div>
       </form>
-
-      <div className="flex flex-wrap items-center gap-2 mb-4">
-        <button
-          onClick={handleExport}
-          disabled={products.length === 0}
-          className="px-4 py-2 rounded-lg border border-plum/15 text-sm text-ink/70 hover:bg-plum/5 disabled:opacity-40"
-        >
-          Export to Excel
-        </button>
-        <button
-          onClick={() => fileInputRef.current?.click()}
-          disabled={importing}
-          className="px-4 py-2 rounded-lg border border-plum/15 text-sm text-ink/70 hover:bg-plum/5 disabled:opacity-40"
-        >
-          {importing ? "Importing…" : "Import from Excel"}
-        </button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".xlsx,.xls,.csv"
-          onChange={handleImportFile}
-          className="hidden"
-        />
-      </div>
-
-      {importSummary && (
-        <div
-          className={`text-xs rounded-lg px-3 py-2 mb-4 ${
-            importSummary.type === "error"
-              ? "bg-berry/10 text-berry-dark"
-              : "bg-green-50 text-green-700"
-          }`}
-        >
-          <p>{importSummary.text}</p>
-          {importSummary.details && importSummary.details.length > 0 && (
-            <ul className="mt-1 list-disc list-inside space-y-0.5">
-              {importSummary.details.slice(0, 5).map((d, i) => (
-                <li key={i}>{d}</li>
-              ))}
-              {importSummary.details.length > 5 && <li>…and {importSummary.details.length - 5} more.</li>}
-            </ul>
-          )}
-        </div>
-      )}
 
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <input
@@ -378,29 +276,29 @@ export default function Products() {
           <div className="overflow-auto max-h-[70vh]">
             <table className="text-sm border-collapse">
               <thead>
-                <tr className="bg-[#F4EFF1] text-left text-ink/50 font-mono text-xs uppercase">
-                  <th className="px-4 py-3 sticky top-0 left-0 z-30 bg-[#F4EFF1] border-r border-b border-plum/10 w-40">
+                <tr className="bg-blush text-left text-ink font-mono text-xs uppercase">
+                  <th className="px-4 py-3 sticky top-0 left-0 z-30 bg-blush border-r border-b border-plum/10 w-40">
                     Name
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 whitespace-nowrap">
                     Category
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 text-right whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 text-right whitespace-nowrap">
                     Buying Price
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 text-right whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 text-right whitespace-nowrap">
                     Selling Price
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 text-right whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 text-right whitespace-nowrap">
                     Margin
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 text-right whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 text-right whitespace-nowrap">
                     Stock
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 text-right whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 text-right whitespace-nowrap">
                     Reorder Level
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-[#F4EFF1] border-b border-plum/10 whitespace-nowrap"></th>
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 whitespace-nowrap"></th>
                 </tr>
               </thead>
               <tbody>
@@ -412,10 +310,10 @@ export default function Products() {
                       <td className="px-4 py-3 font-medium text-ink sticky left-0 z-10 bg-white border-r border-plum/10 w-40 max-w-40 break-words">
                         {p.name}
                       </td>
-                      <td className="px-4 py-3 text-ink/50 text-xs whitespace-nowrap">
+                      <td className="px-4 py-3 text-ink text-xs whitespace-nowrap">
                         {p.category || "—"}
                       </td>
-                      <td className="px-4 py-3 text-right font-mono text-ink/50 whitespace-nowrap">
+                      <td className="px-4 py-3 text-right font-mono text-ink whitespace-nowrap">
                         {money(p.buying_price || 0)}
                       </td>
                       <td className="px-4 py-3 text-right font-mono whitespace-nowrap">
@@ -427,11 +325,15 @@ export default function Products() {
                         </span>
                       </td>
                       <td className="px-4 py-3 text-right font-mono whitespace-nowrap">
-                        <span className={Number(p.stock) <= reorderLevel ? "text-berry-dark" : ""}>
+                        <span
+                          className={
+                            Number(p.stock) <= reorderLevel ? "text-berry-dark" : "text-green-700"
+                          }
+                        >
                           {p.stock}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-right font-mono text-ink/50 whitespace-nowrap">
+                      <td className="px-4 py-3 text-right font-mono text-ink whitespace-nowrap">
                         {reorderLevel}
                       </td>
                       <td className="px-4 py-3 text-right space-x-3 whitespace-nowrap">

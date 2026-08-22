@@ -88,8 +88,9 @@ export default function SalesHistory() {
       </div>
 
       {!loading && sales.length > 0 && (
-        <p className="font-mono text-sm text-ink/60 mb-4">
-          {sales.length} sale{sales.length !== 1 ? "s" : ""} · total {money(dayTotal)}
+        <p className="font-mono text-sm text-ink mb-4">
+          {sales.length} sale{sales.length !== 1 ? "s" : ""} · total{" "}
+          <span className="text-green-700">{money(dayTotal)}</span>
         </p>
       )}
 
@@ -112,9 +113,9 @@ export default function SalesHistory() {
                       timeStyle: "short",
                     })}
                   </p>
-                  <p className="text-xs text-ink/40 font-mono uppercase">{s.payment_method}</p>
+                  <p className="text-xs text-ink font-mono uppercase">{s.payment_method}</p>
                 </div>
-                <p className="font-mono text-plum font-semibold">{money(s.total)}</p>
+                <p className="font-mono text-green-700 font-semibold">{money(s.total)}</p>
               </button>
               {expanded === s.id && (
                 <div className="border-t border-dashed border-plum/20 px-4 py-3 bg-ivory/60">
@@ -125,12 +126,12 @@ export default function SalesHistory() {
                       {items[s.id].map((it) => (
                         <div
                           key={it.id}
-                          className="flex justify-between text-xs font-mono text-ink/70"
+                          className="flex justify-between text-xs font-mono text-ink"
                         >
                           <span>
                             {it.quantity} × {it.product_name}
                           </span>
-                          <span>{money(it.line_total)}</span>
+                          <span className="text-green-700">{money(it.line_total)}</span>
                         </div>
                       ))}
                     </div>
