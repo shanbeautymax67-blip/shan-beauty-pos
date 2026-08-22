@@ -379,7 +379,7 @@ export default function Products() {
             <table className="text-sm border-collapse">
               <thead>
                 <tr className="bg-plum/5 text-left text-ink/50 font-mono text-xs uppercase">
-                  <th className="px-4 py-3 sticky left-0 z-10 bg-plum/5 whitespace-nowrap border-r border-plum/10">
+                  <th className="px-4 py-3 sticky left-0 z-10 bg-plum/5 border-r border-plum/10 w-40">
                     Name
                   </th>
                   <th className="px-4 py-3 whitespace-nowrap">Category</th>
@@ -397,7 +397,7 @@ export default function Products() {
                   const reorderLevel = p.reorder_level ?? DEFAULT_REORDER_LEVEL;
                   return (
                     <tr key={p.id} className="border-t border-plum/5">
-                      <td className="px-4 py-3 font-medium text-ink sticky left-0 z-10 bg-white whitespace-nowrap border-r border-plum/10">
+                      <td className="px-4 py-3 font-medium text-ink sticky left-0 z-10 bg-white border-r border-plum/10 w-40 max-w-40 break-words">
                         {p.name}
                       </td>
                       <td className="px-4 py-3 text-ink/50 text-xs whitespace-nowrap">
