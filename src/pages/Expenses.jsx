@@ -222,59 +222,63 @@ export default function Expenses() {
         <p className="text-ink/50 text-sm">No expenses recorded for {monthLabel(year, month)}.</p>
       ) : (
         <div className="bg-white border border-plum/10 rounded-xl overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-plum/5 text-left text-ink/50 font-mono text-xs uppercase">
-                <th className="px-4 py-3">Date</th>
-                <th className="px-4 py-3">Type</th>
-                <th className="px-4 py-3">Description</th>
-                <th className="px-4 py-3 text-right">Amount</th>
-                <th className="px-4 py-3"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginated.map((exp) => (
-                <tr key={exp.id} className="border-t border-plum/5">
-                  <td className="px-4 py-3 font-mono text-xs text-ink/60">
-                    {new Date(exp.expense_date + "T00:00:00").toLocaleDateString("en-KE", {
-                      day: "numeric",
-                      month: "short",
-                      year: "numeric",
-                    })}
-                  </td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded-full ${
-                        exp.expense_type === "monthly"
-                          ? "bg-plum/10 text-plum"
-                          : "bg-berry/10 text-berry-dark"
-                      }`}
-                    >
-                      {exp.expense_type}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-ink">{exp.description}</td>
-                  <td className="px-4 py-3 text-right font-mono text-berry-dark">
-                    {money(exp.amount)}
-                  </td>
-                  <td className="px-4 py-3 text-right space-x-3 whitespace-nowrap">
-                    <button
-                      onClick={() => startEdit(exp)}
-                      className="text-plum/70 hover:text-plum text-xs font-medium"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(exp.id)}
-                      className="text-berry-dark hover:text-berry text-xs font-medium"
-                    >
-                      Delete
-                    </button>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="text-sm border-collapse">
+              <thead>
+                <tr className="bg-plum/5 text-left text-ink/50 font-mono text-xs uppercase">
+                  <th className="px-4 py-3 sticky left-0 z-10 bg-plum/5 whitespace-nowrap border-r border-plum/10">
+                    Date
+                  </th>
+                  <th className="px-4 py-3 whitespace-nowrap">Type</th>
+                  <th className="px-4 py-3 whitespace-nowrap">Description</th>
+                  <th className="px-4 py-3 text-right whitespace-nowrap">Amount</th>
+                  <th className="px-4 py-3 whitespace-nowrap"></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {paginated.map((exp) => (
+                  <tr key={exp.id} className="border-t border-plum/5">
+                    <td className="px-4 py-3 font-mono text-xs text-ink/60 sticky left-0 z-10 bg-white whitespace-nowrap border-r border-plum/10">
+                      {new Date(exp.expense_date + "T00:00:00").toLocaleDateString("en-KE", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <span
+                        className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded-full ${
+                          exp.expense_type === "monthly"
+                            ? "bg-plum/10 text-plum"
+                            : "bg-berry/10 text-berry-dark"
+                        }`}
+                      >
+                        {exp.expense_type}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-ink whitespace-nowrap">{exp.description}</td>
+                    <td className="px-4 py-3 text-right font-mono text-berry-dark whitespace-nowrap">
+                      {money(exp.amount)}
+                    </td>
+                    <td className="px-4 py-3 text-right space-x-3 whitespace-nowrap">
+                      <button
+                        onClick={() => startEdit(exp)}
+                        className="text-plum/70 hover:text-plum text-xs font-medium"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(exp.id)}
+                        className="text-berry-dark hover:text-berry text-xs font-medium"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           <div className="flex items-center justify-between px-4 py-3 border-t border-plum/10 text-xs">
             <p className="text-ink/50">

@@ -20,6 +20,7 @@ export default function MakeSale() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState(null);
   const [transfer, setTransfer] = useState(null); // { product, direction }
+  const [mobileView, setMobileView] = useState("products"); // "products" | "cart" (small screens only)
 
   async function loadProducts() {
     setLoading(true);
@@ -231,9 +232,40 @@ export default function MakeSale() {
   }
 
   return (
-    <div className="h-full flex">
+    <div className="h-full flex flex-col lg:flex-row">
+      {/* Mobile-only toggle between product list and cart */}
+      <div className="lg:hidden flex border-b border-plum/10 bg-white shrink-0">
+        <button
+          onClick={() => setMobileView("products")}
+          className={`flex-1 text-sm font-medium py-3 border-b-2 transition-colors ${
+            mobileView === "products"
+              ? "border-berry text-plum"
+              : "border-transparent text-ink/40"
+          }`}
+        >
+          Products
+        </button>
+        <button
+          onClick={() => setMobileView("cart")}
+          className={`flex-1 text-sm font-medium py-3 border-b-2 transition-colors relative ${
+            mobileView === "cart" ? "border-berry text-plum" : "border-transparent text-ink/40"
+          }`}
+        >
+          Cart
+          {cart.length > 0 && (
+            <span className="ml-1.5 inline-flex items-center justify-center min-w-[1.1rem] h-[1.1rem] px-1 rounded-full bg-berry text-white text-[10px] font-mono align-middle">
+              {cart.reduce((sum, i) => sum + i.quantity, 0)}
+            </span>
+          )}
+        </button>
+      </div>
+
       {/* Product grid */}
-      <div className="flex-1 overflow-y-auto p-6">
+      <div
+        className={`flex-1 overflow-y-auto p-6 ${
+          mobileView === "cart" ? "hidden" : "flex flex-col"
+        } lg:flex`}
+      >
         <div className="flex items-center justify-between mb-5">
           <h1 className="font-display text-2xl text-plum">Make a Sale</h1>
         </div>
@@ -331,7 +363,11 @@ export default function MakeSale() {
       </div>
 
       {/* Cart panel */}
-      <div className="w-[32rem] shrink-0 bg-white border-l border-plum/10 flex flex-col">
+      <div
+        className={`w-full flex-1 lg:flex-none lg:w-[32rem] lg:shrink-0 bg-white lg:border-l border-plum/10 flex-col overflow-hidden ${
+          mobileView === "cart" ? "flex" : "hidden"
+        } lg:flex`}
+      >
         <div className="px-6 py-5 border-b border-plum/10">
           <p className="font-display text-lg text-plum">Current Sale</p>
         </div>

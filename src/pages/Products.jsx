@@ -375,43 +375,54 @@ export default function Products() {
         </p>
       ) : (
         <div className="bg-white border border-plum/10 rounded-xl overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-plum/5 text-left text-ink/50 font-mono text-xs uppercase">
-                <th className="px-4 py-3">Name</th>
-                <th className="px-4 py-3">Category</th>
-                <th className="px-4 py-3 text-right">Buying Price</th>
-                <th className="px-4 py-3 text-right">Selling Price</th>
-                <th className="px-4 py-3 text-right">Margin</th>
-                <th className="px-4 py-3 text-right">Stock</th>
-                <th className="px-4 py-3 text-right">Reorder Level</th>
-                <th className="px-4 py-3"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginated.map((p) => {
-                const margin = Number(p.price) - Number(p.buying_price || 0);
-                const reorderLevel = p.reorder_level ?? DEFAULT_REORDER_LEVEL;
-                return (
-                  <tr key={p.id} className="border-t border-plum/5">
-                    <td className="px-4 py-3 font-medium text-ink">{p.name}</td>
-                    <td className="px-4 py-3 text-ink/50 text-xs">{p.category || "—"}</td>
-                    <td className="px-4 py-3 text-right font-mono text-ink/50">
-                      {money(p.buying_price || 0)}
-                    </td>
-                    <td className="px-4 py-3 text-right font-mono">{money(p.price)}</td>
-                    <td className="px-4 py-3 text-right font-mono">
-                      <span className={margin < 0 ? "text-berry-dark" : "text-green-700"}>
-                        {money(margin)}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-right font-mono">
-                      <span className={Number(p.stock) <= reorderLevel ? "text-berry-dark" : ""}>
-                        {p.stock}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-right font-mono text-ink/50">{reorderLevel}</td>
-                    <td className="px-4 py-3 text-right space-x-3 whitespace-nowrap">
+          <div className="overflow-x-auto">
+            <table className="text-sm border-collapse">
+              <thead>
+                <tr className="bg-plum/5 text-left text-ink/50 font-mono text-xs uppercase">
+                  <th className="px-4 py-3 sticky left-0 z-10 bg-plum/5 whitespace-nowrap border-r border-plum/10">
+                    Name
+                  </th>
+                  <th className="px-4 py-3 whitespace-nowrap">Category</th>
+                  <th className="px-4 py-3 text-right whitespace-nowrap">Buying Price</th>
+                  <th className="px-4 py-3 text-right whitespace-nowrap">Selling Price</th>
+                  <th className="px-4 py-3 text-right whitespace-nowrap">Margin</th>
+                  <th className="px-4 py-3 text-right whitespace-nowrap">Stock</th>
+                  <th className="px-4 py-3 text-right whitespace-nowrap">Reorder Level</th>
+                  <th className="px-4 py-3 whitespace-nowrap"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginated.map((p) => {
+                  const margin = Number(p.price) - Number(p.buying_price || 0);
+                  const reorderLevel = p.reorder_level ?? DEFAULT_REORDER_LEVEL;
+                  return (
+                    <tr key={p.id} className="border-t border-plum/5">
+                      <td className="px-4 py-3 font-medium text-ink sticky left-0 z-10 bg-white whitespace-nowrap border-r border-plum/10">
+                        {p.name}
+                      </td>
+                      <td className="px-4 py-3 text-ink/50 text-xs whitespace-nowrap">
+                        {p.category || "—"}
+                      </td>
+                      <td className="px-4 py-3 text-right font-mono text-ink/50 whitespace-nowrap">
+                        {money(p.buying_price || 0)}
+                      </td>
+                      <td className="px-4 py-3 text-right font-mono whitespace-nowrap">
+                        {money(p.price)}
+                      </td>
+                      <td className="px-4 py-3 text-right font-mono whitespace-nowrap">
+                        <span className={margin < 0 ? "text-berry-dark" : "text-green-700"}>
+                          {money(margin)}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-right font-mono whitespace-nowrap">
+                        <span className={Number(p.stock) <= reorderLevel ? "text-berry-dark" : ""}>
+                          {p.stock}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-right font-mono text-ink/50 whitespace-nowrap">
+                        {reorderLevel}
+                      </td>
+                      <td className="px-4 py-3 text-right space-x-3 whitespace-nowrap">
                       <button
                         onClick={() => setStockTarget(p)}
                         className="text-berry-dark hover:text-berry text-xs font-medium"
@@ -435,7 +446,8 @@ export default function Products() {
                 );
               })}
             </tbody>
-          </table>
+            </table>
+          </div>
 
           <div className="flex items-center justify-between px-4 py-3 border-t border-plum/10 text-xs">
             <p className="text-ink/50">
