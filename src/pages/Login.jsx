@@ -120,7 +120,7 @@ export default function Login() {
                     setResetMessage(null);
                     setResetUsername(username);
                   }}
-                  className="text-xs text-berry-light hover:underline"
+                  className="text-xs text-blush/90 hover:text-blush hover:underline"
                 >
                   Forgot password?
                 </button>
@@ -135,7 +135,7 @@ export default function Login() {
               />
             </div>
             {error && (
-              <p className="text-sm text-berry-light bg-berry/10 border border-berry/30 rounded-lg px-3 py-2">
+              <p className="text-sm text-red-200 bg-red-950/40 border border-red-500/30 rounded-lg px-3 py-2">
                 {error}
               </p>
             )}
@@ -175,7 +175,7 @@ export default function Login() {
               <p
                 className={`text-sm rounded-lg px-3 py-2 border ${
                   resetMessage.type === "error"
-                    ? "text-berry-light bg-berry/10 border-berry/30"
+                    ? "text-red-200 bg-red-950/40 border-red-500/30"
                     : "text-blush bg-white/5 border-white/10"
                 }`}
               >
@@ -195,7 +195,7 @@ export default function Login() {
                 setMode("login");
                 setResetMessage(null);
               }}
-              className="w-full text-center text-xs text-berry-light hover:underline"
+              className="w-full text-center text-xs text-blush/90 hover:text-blush hover:underline"
             >
               Back to sign in
             </button>

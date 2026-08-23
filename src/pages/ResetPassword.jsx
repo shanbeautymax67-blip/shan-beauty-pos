@@ -72,7 +72,7 @@ export default function ResetPassword({ onDone }) {
             />
           </div>
           {error && (
-            <p className="text-sm text-berry-light bg-berry/10 border border-berry/30 rounded-lg px-3 py-2">
+            <p className="text-sm text-red-200 bg-red-950/40 border border-red-500/30 rounded-lg px-3 py-2">
               {error}
             </p>
           )}
