@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./lib/supabaseClient";
 import Login from "./pages/Login";
+import ResetPassword from "./pages/ResetPassword";
 import Sidebar from "./components/Sidebar";
 import MakeSale from "./pages/MakeSale";
 import Products from "./pages/Products";
@@ -16,11 +17,14 @@ import { syncThemeFromRemote } from "./lib/theme";
 export default function App() {
   const [session, setSession] = useState(undefined); // undefined = loading
   const [tab, setTab] = useState("dashboard");
+  const [passwordRecovery, setPasswordRecovery] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setSession(data.session));
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, sess) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((event, sess) => {
       setSession(sess);
+      // Fired when the user lands here via a "reset password" email link.
+      if (event === "PASSWORD_RECOVERY") setPasswordRecovery(true);
     });
     return () => listener.subscription.unsubscribe();
   }, []);
@@ -35,6 +39,10 @@ export default function App() {
         <p className="text-blush font-display text-lg tracking-wide">Loading SHAN BEAUTY MAX…</p>
       </div>
     );
+  }
+
+  if (passwordRecovery) {
+    return <ResetPassword onDone={() => setPasswordRecovery(false)} />;
   }
 
   if (!session) {
