@@ -5,6 +5,78 @@ import VerifyPinModal from "../components/VerifyPinModal";
 import { isPinSet } from "../lib/pinUtils";
 import { exportProductsToExcel, parseProductsExcelFile } from "../lib/productsIO";
 import { fetchAllRows } from "../lib/fetchAll";
+import {
+  DEFAULT_THEME,
+  THEME_FIELDS,
+  applyTheme,
+  loadLocalTheme,
+  saveLocalTheme,
+  saveRemoteTheme,
+} from "../lib/theme";
+
+const PRESETS = [
+  { name: "Berry Plum (Default)", theme: DEFAULT_THEME },
+  {
+    name: "Ocean Teal",
+    theme: {
+      plum: "#0B3B4A",
+      "plum-light": "#125467",
+      "plum-dark": "#062832",
+      berry: "#1FA9A0",
+      "berry-light": "#4FC5BC",
+      "berry-dark": "#158A82",
+      ivory: "#F2FAF9",
+      ink: "#0F2D30",
+      gold: "#E0A548",
+      blush: "#D6F0EC",
+    },
+  },
+  {
+    name: "Sunset Coral",
+    theme: {
+      plum: "#4A1230",
+      "plum-light": "#651A42",
+      "plum-dark": "#320B20",
+      berry: "#F2764B",
+      "berry-light": "#F79A72",
+      "berry-dark": "#D65A31",
+      ivory: "#FFF6F1",
+      ink: "#3A1712",
+      gold: "#F0B429",
+      blush: "#FCE0D2",
+    },
+  },
+  {
+    name: "Emerald Garden",
+    theme: {
+      plum: "#122B1E",
+      "plum-light": "#1B3E2C",
+      "plum-dark": "#0B1C13",
+      berry: "#2F9E5B",
+      "berry-light": "#57BC7D",
+      "berry-dark": "#217A44",
+      ivory: "#F3FAF5",
+      ink: "#15261C",
+      gold: "#D6A93A",
+      blush: "#DCF3E3",
+    },
+  },
+  {
+    name: "Royal Violet",
+    theme: {
+      plum: "#2A1B54",
+      "plum-light": "#3C2777",
+      "plum-dark": "#190F35",
+      berry: "#8B5CF6",
+      "berry-light": "#A78BFA",
+      "berry-dark": "#6D3FD1",
+      ivory: "#F7F5FC",
+      ink: "#221739",
+      gold: "#E0B84A",
+      blush: "#E8DFFB",
+    },
+  },
+];
 
 export default function Settings() {
   const [pinIsSet, setPinIsSet] = useState(false);
@@ -18,9 +90,43 @@ export default function Settings() {
   const [importSummary, setImportSummary] = useState(null);
   const fileInputRef = useRef(null);
 
+  const [theme, setTheme] = useState(() => loadLocalTheme());
+  const [savingTheme, setSavingTheme] = useState(false);
+  const [themeMessage, setThemeMessage] = useState(null);
+
   useEffect(() => {
     isPinSet().then(setPinIsSet);
   }, []);
+
+  function previewTheme(next) {
+    setTheme(next);
+    applyTheme(next); // live preview as you pick colors, before saving
+  }
+
+  function updateColor(key, hex) {
+    previewTheme({ ...theme, [key]: hex });
+  }
+
+  function applyPreset(preset) {
+    previewTheme({ ...preset });
+  }
+
+  async function handleSaveTheme() {
+    setSavingTheme(true);
+    setThemeMessage(null);
+    saveLocalTheme(theme);
+    const { error } = await saveRemoteTheme(theme);
+    setSavingTheme(false);
+    setThemeMessage(
+      error
+        ? { type: "error", text: "Saved on this device, but couldn't sync to your account." }
+        : { type: "success", text: "Theme saved — applied on every device." }
+    );
+  }
+
+  function handleResetTheme() {
+    previewTheme({ ...DEFAULT_THEME });
+  }
 
   async function handleExport() {
     setExporting(true);
@@ -100,6 +206,92 @@ export default function Settings() {
   return (
     <div className="p-6 max-w-5xl">
       <h1 className="font-display text-2xl text-plum mb-6">Settings</h1>
+
+      <div className="border border-plum/10 rounded-xl p-5 bg-white mb-6">
+        <h2 className="font-display text-lg text-plum mb-1">Appearance</h2>
+        <p className="text-xs text-ink/50 mb-4">
+          Pick a preset or customize each color. Changes preview live and apply on every device
+          once saved.
+        </p>
+
+        <p className="text-xs font-mono text-ink uppercase mb-2">Presets</p>
+        <div className="flex flex-wrap gap-2 mb-5">
+          {PRESETS.map((preset) => (
+            <button
+              key={preset.name}
+              onClick={() => applyPreset(preset.theme)}
+              className="flex items-center gap-2 rounded-lg border border-plum/15 px-3 py-2 text-xs font-medium text-ink hover:border-plum/30"
+            >
+              <span className="flex -space-x-1">
+                <span
+                  className="w-4 h-4 rounded-full border border-white"
+                  style={{ background: preset.theme.plum }}
+                />
+                <span
+                  className="w-4 h-4 rounded-full border border-white"
+                  style={{ background: preset.theme.berry }}
+                />
+                <span
+                  className="w-4 h-4 rounded-full border border-white"
+                  style={{ background: preset.theme.gold }}
+                />
+              </span>
+              {preset.name}
+            </button>
+          ))}
+        </div>
+
+        <p className="text-xs font-mono text-ink uppercase mb-2">Custom Colors</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+          {THEME_FIELDS.map((field) => (
+            <div
+              key={field.key}
+              className="flex items-center justify-between gap-3 rounded-lg border border-plum/10 px-3 py-2"
+            >
+              <span className="text-sm text-ink">{field.label}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-mono text-ink/40 uppercase">
+                  {theme[field.key]}
+                </span>
+                <input
+                  type="color"
+                  value={theme[field.key]}
+                  onChange={(e) => updateColor(field.key, e.target.value)}
+                  className="w-9 h-9 rounded-md border border-plum/15 cursor-pointer bg-transparent p-0.5"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {themeMessage && (
+          <p
+            className={`text-xs rounded-lg px-3 py-2 mb-4 ${
+              themeMessage.type === "error"
+                ? "bg-berry/10 text-berry-dark"
+                : "bg-green-50 text-green-700"
+            }`}
+          >
+            {themeMessage.text}
+          </p>
+        )}
+
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={handleSaveTheme}
+            disabled={savingTheme}
+            className="px-4 py-2 rounded-lg bg-berry hover:bg-berry-light text-white text-sm font-medium disabled:opacity-50"
+          >
+            {savingTheme ? "Saving…" : "Save Theme"}
+          </button>
+          <button
+            onClick={handleResetTheme}
+            className="px-4 py-2 rounded-lg border border-plum/15 text-sm text-ink/70 hover:bg-plum/5"
+          >
+            Reset to Default
+          </button>
+        </div>
+      </div>
 
       <div className="border border-plum/10 rounded-xl p-5 bg-white mb-6">
         <h2 className="font-display text-lg text-plum mb-1">Product Data</h2>

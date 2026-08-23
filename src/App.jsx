@@ -11,6 +11,7 @@ import Reports from "./pages/Reports";
 import Financials from "./pages/Financials";
 import CrossShop from "./pages/CrossShop";
 import Settings from "./pages/Settings";
+import { syncThemeFromRemote } from "./lib/theme";
 
 export default function App() {
   const [session, setSession] = useState(undefined); // undefined = loading
@@ -23,6 +24,10 @@ export default function App() {
     });
     return () => listener.subscription.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (session) syncThemeFromRemote();
+  }, [session]);
 
   if (session === undefined) {
     return (

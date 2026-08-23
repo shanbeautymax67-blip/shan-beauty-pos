@@ -3,6 +3,18 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --color-plum: 43 16 36;
+    --color-plum-light: 62 24 54;
+    --color-plum-dark: 27 10 23;
+    --color-berry: 198 70 122;
+    --color-berry-light: 224 107 156;
+    --color-berry-dark: 158 54 97;
+    --color-ivory: 251 246 242;
+    --color-ink: 36 27 34;
+    --color-gold: 201 161 90;
+    --color-blush: 243 217 228;
+  }
   html, body, #root {
     height: 100%;
   }

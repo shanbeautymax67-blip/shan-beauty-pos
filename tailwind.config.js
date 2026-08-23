@@ -5,19 +5,19 @@ export default {
     extend: {
       colors: {
         plum: {
-          DEFAULT: "#2B1024",
-          light: "#3E1836",
-          dark: "#1B0A17",
+          DEFAULT: "rgb(var(--color-plum) / <alpha-value>)",
+          light: "rgb(var(--color-plum-light) / <alpha-value>)",
+          dark: "rgb(var(--color-plum-dark) / <alpha-value>)",
         },
         berry: {
-          DEFAULT: "#C6467A",
-          light: "#E06B9C",
-          dark: "#9E3661",
+          DEFAULT: "rgb(var(--color-berry) / <alpha-value>)",
+          light: "rgb(var(--color-berry-light) / <alpha-value>)",
+          dark: "rgb(var(--color-berry-dark) / <alpha-value>)",
         },
-        ivory: "#FBF6F2",
-        ink: "#241B22",
-        gold: "#C9A15A",
-        blush: "#F3D9E4",
+        ivory: "rgb(var(--color-ivory) / <alpha-value>)",
+        ink: "rgb(var(--color-ink) / <alpha-value>)",
+        gold: "rgb(var(--color-gold) / <alpha-value>)",
+        blush: "rgb(var(--color-blush) / <alpha-value>)",
       },
       fontFamily: {
         display: ["Inter", "sans-serif"],
