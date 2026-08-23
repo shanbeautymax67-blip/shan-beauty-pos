@@ -2,7 +2,7 @@ import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -11,9 +11,27 @@ export default function Login() {
     e.preventDefault();
     setError("");
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    // Usernames map to a real email behind the scenes (Supabase Auth
+    // itself only understands email/phone), so look that up first.
+    const { data: match, error: lookupError } = await supabase
+      .from("login_usernames")
+      .select("user_email")
+      .eq("username", username.trim())
+      .maybeSingle();
+
+    if (lookupError || !match) {
+      setLoading(false);
+      setError("Username or password is incorrect.");
+      return;
+    }
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email: match.user_email,
+      password,
+    });
     setLoading(false);
-    if (error) setError(error.message);
+    if (error) setError("Username or password is incorrect.");
   }
 
   return (
@@ -32,15 +50,17 @@ export default function Login() {
         >
           <div>
             <label className="block text-xs font-mono text-blush/70 mb-1 uppercase tracking-wide">
-              Email
+              Username
             </label>
             <input
-              type="email"
+              type="text"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              autoCapitalize="none"
+              autoCorrect="off"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full rounded-lg bg-plum-dark border border-white/10 px-3 py-2 text-ivory focus:outline-none focus:ring-2 focus:ring-berry"
-              placeholder="you@shanbeautymax.co.ke"
+              placeholder="yourname"
             />
           </div>
           <div>

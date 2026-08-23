@@ -13,7 +13,6 @@ import {
   saveLocalTheme,
   saveRemoteTheme,
 } from "../lib/theme";
-
 const PRESETS = [
   { name: "Berry Plum (Default)", theme: DEFAULT_THEME },
   {
@@ -124,9 +123,61 @@ export default function Settings() {
   const [savingTheme, setSavingTheme] = useState(false);
   const [themeMessage, setThemeMessage] = useState(null);
 
+  const [username, setUsername] = useState("");
+  const [usernameInput, setUsernameInput] = useState("");
+  const [savingUsername, setSavingUsername] = useState(false);
+  const [usernameMessage, setUsernameMessage] = useState(null);
+
   useEffect(() => {
     isPinSet().then(setPinIsSet);
   }, []);
+
+  useEffect(() => {
+    async function loadUsername() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user?.email) return;
+      const { data } = await supabase
+        .from("login_usernames")
+        .select("username")
+        .eq("user_email", user.email)
+        .maybeSingle();
+      if (data?.username) {
+        setUsername(data.username);
+        setUsernameInput(data.username);
+      }
+    }
+    loadUsername();
+  }, []);
+
+  async function handleSaveUsername() {
+    const next = usernameInput.trim();
+    if (!next) {
+      setUsernameMessage({ type: "error", text: "Username can't be empty." });
+      return;
+    }
+    setSavingUsername(true);
+    setUsernameMessage(null);
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    const { error } = await supabase
+      .from("login_usernames")
+      .upsert({ user_email: user.email, username: next }, { onConflict: "user_email" });
+    setSavingUsername(false);
+    if (error) {
+      setUsernameMessage({
+        type: "error",
+        text: error.message.includes("duplicate")
+          ? "That username is already taken."
+          : "Couldn't save the username.",
+      });
+    } else {
+      setUsername(next);
+      setUsernameMessage({ type: "success", text: "Username updated — use it next time you log in." });
+    }
+  }
 
   function previewTheme(next) {
     setTheme(next);
@@ -238,6 +289,42 @@ export default function Settings() {
   return (
     <div className="p-6 max-w-5xl">
       <h1 className="font-display text-2xl text-heading mb-6">Settings</h1>
+
+      <div className="border border-plum/10 rounded-xl p-5 bg-white mb-6">
+        <h2 className="font-display text-lg text-heading mb-1">Account</h2>
+        <p className="text-xs text-ink/50 mb-4">
+          This is the username you type to log in, instead of your email.
+        </p>
+
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <input
+            type="text"
+            value={usernameInput}
+            onChange={(e) => setUsernameInput(e.target.value)}
+            placeholder="yourname"
+            className="rounded-lg border border-plum/15 px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-berry"
+          />
+          <button
+            onClick={handleSaveUsername}
+            disabled={savingUsername || usernameInput.trim() === username}
+            className="px-4 py-2 rounded-lg bg-berry hover:bg-berry-light text-white text-sm font-medium disabled:opacity-50"
+          >
+            {savingUsername ? "Saving…" : "Save Username"}
+          </button>
+        </div>
+
+        {usernameMessage && (
+          <p
+            className={`text-xs rounded-lg px-3 py-2 ${
+              usernameMessage.type === "error"
+                ? "bg-berry/10 text-berry-dark"
+                : "bg-green-50 text-green-700"
+            }`}
+          >
+            {usernameMessage.text}
+          </p>
+        )}
+      </div>
 
       <div className="border border-plum/10 rounded-xl p-5 bg-white mb-6">
         <h2 className="font-display text-lg text-heading mb-1">Appearance</h2>
