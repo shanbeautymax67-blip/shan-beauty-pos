@@ -120,7 +120,7 @@ export default function Expenses() {
   return (
     <div className="p-6 max-w-4xl">
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-        <h1 className="font-display text-2xl text-plum">Expenses</h1>
+        <h1 className="font-display text-2xl text-heading">Expenses</h1>
         <div className="flex items-center gap-3">
           <button
             onClick={() => shiftMonth(-1)}

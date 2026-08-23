@@ -35,7 +35,7 @@ export default function TransferModal({ product, direction, onClose, onConfirm }
         <p className="font-mono text-[11px] text-ink/40 uppercase tracking-widest mb-1">
           {isToShopA ? "Send to Shop A" : "Bring from Shop A"}
         </p>
-        <h2 className="font-display text-lg text-plum mb-1">{product.name}</h2>
+        <h2 className="font-display text-lg text-heading mb-1">{product.name}</h2>
         <p className="text-xs text-ink/50 mb-4">
           {isToShopA
             ? "Royal Lady Cosmetics — this leaves this shop's stock and won't count as a sale here."

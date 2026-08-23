@@ -29,7 +29,7 @@ export default function SetPinModal({ hasExistingPin, onClose, onDone }) {
         <p className="font-mono text-[11px] text-ink/40 uppercase tracking-widest mb-1">
           {hasExistingPin ? "Change PIN" : "Set a PIN"}
         </p>
-        <h2 className="font-display text-lg text-plum mb-1">Protect destructive actions</h2>
+        <h2 className="font-display text-lg text-heading mb-1">Protect destructive actions</h2>
         <p className="text-xs text-ink/50 mb-4">
           This PIN will be required before clearing products or resetting test data.
         </p>

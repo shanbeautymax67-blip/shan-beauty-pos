@@ -46,7 +46,7 @@ export default function Sidebar({ tab, setTab }) {
         <button
           onClick={() => setCollapsed((c) => !c)}
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-          className={`shrink-0 flex items-center justify-center rounded-lg text-blush/70 hover:text-blush hover:bg-white/10 transition-colors ${
+          className={`shrink-0 flex items-center justify-center rounded-lg text-sidebar-text/70 hover:text-sidebar-text hover:bg-white/10 transition-colors ${
             collapsed ? "w-9 h-9 order-first" : "w-8 h-8"
           }`}
         >
@@ -67,10 +67,10 @@ export default function Sidebar({ tab, setTab }) {
               className="w-11 h-11 rounded-full shrink-0"
             />
             <div className="min-w-0">
-              <p className="font-display text-sm text-blush leading-tight truncate">
+              <p className="font-display text-sm text-sidebar-text leading-tight break-words">
                 SHAN BEAUTY MAX
               </p>
-              <p className="font-mono text-[10px] text-berry-light tracking-[0.2em] uppercase mt-1">
+              <p className="font-mono text-[10px] text-sidebar-text/70 tracking-[0.2em] uppercase mt-1">
                 Point of Sale
               </p>
             </div>
@@ -87,8 +87,8 @@ export default function Sidebar({ tab, setTab }) {
               collapsed ? "justify-center px-0 py-3" : "gap-3 px-5 py-3"
             } ${
               tab === item.id
-                ? "bg-white/5 border-berry text-ivory"
-                : "border-transparent text-blush/60 hover:text-blush hover:bg-white/5"
+                ? "bg-white/5 border-berry text-sidebar-text"
+                : "border-transparent text-sidebar-text/60 hover:text-sidebar-text hover:bg-white/5"
             }`}
           >
             <span className="text-base shrink-0">{item.icon}</span>
@@ -100,7 +100,7 @@ export default function Sidebar({ tab, setTab }) {
         <button
           onClick={() => supabase.auth.signOut()}
           title={collapsed ? "Sign out" : undefined}
-          className={`w-full text-xs font-mono text-blush/50 hover:text-blush transition-colors uppercase tracking-wide py-2 ${
+          className={`w-full text-xs font-mono text-sidebar-text/50 hover:text-sidebar-text transition-colors uppercase tracking-wide py-2 ${
             collapsed ? "text-center" : ""
           }`}
         >

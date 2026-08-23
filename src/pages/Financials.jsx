@@ -96,7 +96,7 @@ export default function Financials() {
   return (
     <div className="p-6 max-w-4xl">
       <div className="flex items-center justify-between mb-2 flex-wrap gap-3">
-        <h1 className="font-display text-2xl text-plum">Financials</h1>
+        <h1 className="font-display text-2xl text-heading">Financials</h1>
         <div className="flex items-center gap-3">
           <button
             onClick={() => setDate(shiftDate(date, -1))}
@@ -138,7 +138,7 @@ export default function Financials() {
           </div>
 
           <div className="bg-white border border-plum/10 rounded-xl p-5 mb-6">
-            <h2 className="font-display text-lg text-plum mb-1">Cash Left (Change Float)</h2>
+            <h2 className="font-display text-lg text-heading mb-1">Cash Left (Change Float)</h2>
             <p className="text-xs text-ink/50 mb-4">
               Set aside cash from today's till to carry forward as tomorrow's change float.
             </p>

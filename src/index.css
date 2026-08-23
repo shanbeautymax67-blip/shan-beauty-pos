@@ -14,6 +14,8 @@
     --color-ink: 36 27 34;
     --color-gold: 201 161 90;
     --color-blush: 243 217 228;
+    --color-heading: 43 16 36;
+    --color-sidebar-text: 243 217 228;
   }
   html, body, #root {
     height: 100%;

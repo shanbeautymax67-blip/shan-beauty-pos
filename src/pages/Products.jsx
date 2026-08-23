@@ -133,7 +133,7 @@ export default function Products() {
 
   return (
     <div className="p-6 max-w-5xl">
-      <h1 className="font-display text-2xl text-plum mb-6">Products</h1>
+      <h1 className="font-display text-2xl text-heading mb-6">Products</h1>
 
       <form
         onSubmit={handleSubmit}

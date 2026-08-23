@@ -29,6 +29,8 @@ const PRESETS = [
       ink: "#0F2D30",
       gold: "#E0A548",
       blush: "#D6F0EC",
+      heading: "#0B3B4A",
+      "sidebar-text": "#D6F0EC",
     },
   },
   {
@@ -44,6 +46,8 @@ const PRESETS = [
       ink: "#3A1712",
       gold: "#F0B429",
       blush: "#FCE0D2",
+      heading: "#4A1230",
+      "sidebar-text": "#FCE0D2",
     },
   },
   {
@@ -59,6 +63,8 @@ const PRESETS = [
       ink: "#15261C",
       gold: "#D6A93A",
       blush: "#DCF3E3",
+      heading: "#122B1E",
+      "sidebar-text": "#DCF3E3",
     },
   },
   {
@@ -74,6 +80,25 @@ const PRESETS = [
       ink: "#221739",
       gold: "#E0B84A",
       blush: "#E8DFFB",
+      heading: "#2A1B54",
+      "sidebar-text": "#E8DFFB",
+    },
+  },
+  {
+    name: "Vivid Magenta",
+    theme: {
+      plum: "#EA3EC4",
+      "plum-light": "#640292",
+      "plum-dark": "#FF00FF",
+      berry: "#990085",
+      "berry-light": "#0B4F60",
+      "berry-dark": "#7C0E6D",
+      gold: "#05DDE1",
+      blush: "#F3D9E4",
+      ivory: "#C7C7C7",
+      ink: "#000000",
+      heading: "#7C0E6D",
+      "sidebar-text": "#FFFFFF",
     },
   },
 ];
@@ -205,10 +230,10 @@ export default function Settings() {
 
   return (
     <div className="p-6 max-w-5xl">
-      <h1 className="font-display text-2xl text-plum mb-6">Settings</h1>
+      <h1 className="font-display text-2xl text-heading mb-6">Settings</h1>
 
       <div className="border border-plum/10 rounded-xl p-5 bg-white mb-6">
-        <h2 className="font-display text-lg text-plum mb-1">Appearance</h2>
+        <h2 className="font-display text-lg text-heading mb-1">Appearance</h2>
         <p className="text-xs text-ink/50 mb-4">
           Pick a preset or customize each color. Changes preview live and apply on every device
           once saved.
@@ -294,7 +319,7 @@ export default function Settings() {
       </div>
 
       <div className="border border-plum/10 rounded-xl p-5 bg-white mb-6">
-        <h2 className="font-display text-lg text-plum mb-1">Product Data</h2>
+        <h2 className="font-display text-lg text-heading mb-1">Product Data</h2>
         <p className="text-xs text-ink/50 mb-4">
           Export your product list to an Excel file, or bulk-import products from one.
         </p>

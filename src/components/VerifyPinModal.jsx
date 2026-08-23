@@ -29,7 +29,7 @@ export default function VerifyPinModal({ title, description, confirmLabel, requi
         <p className="font-mono text-[11px] text-berry-dark uppercase tracking-widest mb-1">
           PIN required
         </p>
-        <h2 className="font-display text-lg text-plum mb-1">{title}</h2>
+        <h2 className="font-display text-lg text-heading mb-1">{title}</h2>
         <p className="text-xs text-ink/50 mb-4">{description}</p>
 
         <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">Enter PIN</label>

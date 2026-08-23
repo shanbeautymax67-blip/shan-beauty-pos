@@ -68,7 +68,7 @@ export default function SalesHistory() {
   return (
     <div className="p-6 max-w-4xl">
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-        <h1 className="font-display text-2xl text-plum">Sales History</h1>
+        <h1 className="font-display text-2xl text-heading">Sales History</h1>
         <div className="flex items-center gap-2">
           <input
             type="date"

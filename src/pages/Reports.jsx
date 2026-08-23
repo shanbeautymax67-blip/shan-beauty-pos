@@ -122,7 +122,7 @@ export default function Reports() {
 
   return (
     <div className="p-6 max-w-4xl">
-      <h1 className="font-display text-2xl text-plum mb-5">Reports</h1>
+      <h1 className="font-display text-2xl text-heading mb-5">Reports</h1>
 
       <div className="flex items-center gap-2 mb-5">
         {[
@@ -226,7 +226,7 @@ export default function Reports() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-white border border-plum/10 rounded-xl p-5">
-              <h2 className="font-display text-lg text-plum mb-3">Payment Split</h2>
+              <h2 className="font-display text-lg text-heading mb-3">Payment Split</h2>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-ink">Cash</span>
@@ -240,7 +240,7 @@ export default function Reports() {
             </div>
 
             <div className="bg-white border border-plum/10 rounded-xl p-5">
-              <h2 className="font-display text-lg text-plum mb-3">Top Sellers</h2>
+              <h2 className="font-display text-lg text-heading mb-3">Top Sellers</h2>
               {result.topItems.length === 0 ? (
                 <p className="text-sm text-ink/40">No sales in this period.</p>
               ) : (

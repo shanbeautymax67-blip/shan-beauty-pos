@@ -18,6 +18,8 @@ export default {
         ink: "rgb(var(--color-ink) / <alpha-value>)",
         gold: "rgb(var(--color-gold) / <alpha-value>)",
         blush: "rgb(var(--color-blush) / <alpha-value>)",
+        heading: "rgb(var(--color-heading) / <alpha-value>)",
+        "sidebar-text": "rgb(var(--color-sidebar-text) / <alpha-value>)",
       },
       fontFamily: {
         display: ["Inter", "sans-serif"],

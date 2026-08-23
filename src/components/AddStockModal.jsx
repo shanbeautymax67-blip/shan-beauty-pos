@@ -26,7 +26,7 @@ export default function AddStockModal({ product, onClose, onConfirm }) {
         <p className="font-mono text-[11px] text-ink/40 uppercase tracking-widest mb-1">
           Add Stock
         </p>
-        <h2 className="font-display text-lg text-plum mb-1">{product.name}</h2>
+        <h2 className="font-display text-lg text-heading mb-1">{product.name}</h2>
         <p className="text-xs text-ink/50 mb-4">
           Currently {product.stock} in stock. Enter how many are being added.
         </p>

@@ -297,7 +297,7 @@ export default function MakeSale() {
         } lg:flex`}
       >
         <div className="flex items-center justify-between mb-5">
-          <h1 className="font-display text-2xl text-plum">Make a Sale</h1>
+          <h1 className="font-display text-2xl text-heading">Make a Sale</h1>
         </div>
         <input
           type="text"
@@ -405,7 +405,7 @@ export default function MakeSale() {
         } lg:flex`}
       >
         <div className="px-6 py-5 border-b border-plum/10">
-          <p className="font-display text-lg text-plum">Current Sale</p>
+          <p className="font-display text-lg text-heading">Current Sale</p>
         </div>
         <div className="flex-1 overflow-y-auto px-6 py-4">
           {cart.length === 0 ? (

@@ -136,7 +136,7 @@ export default function Dashboard({ setTab }) {
 
   return (
     <div className="p-6 max-w-5xl">
-      <h1 className="font-display text-2xl text-plum mb-6">Today {todayLabel}</h1>
+      <h1 className="font-display text-2xl text-heading mb-6">Today {todayLabel}</h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatCard label="Sales Today" value={today.saleCount} boldLabel />
@@ -150,7 +150,7 @@ export default function Dashboard({ setTab }) {
         <CashMpesaCard cash={today.cashTotal} mpesa={today.mpesaTotal} />
       </div>
 
-      <h2 className="font-display text-xl text-plum mb-4">This Month — {monthName}</h2>
+      <h2 className="font-display text-xl text-heading mb-4">This Month — {monthName}</h2>
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-10">
         <StatCard label="Sales" value={monthly.saleCount} />
         <StatCard label="Total Sales" value={money(monthly.revenue)} />
@@ -165,7 +165,7 @@ export default function Dashboard({ setTab }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white border border-plum/10 rounded-xl p-5">
-          <h2 className="font-display text-lg text-plum mb-3">Top Sellers Today</h2>
+          <h2 className="font-display text-lg text-heading mb-3">Top Sellers Today</h2>
           {topItems.length === 0 ? (
             <p className="text-sm text-ink/40">No sales yet today.</p>
           ) : (
@@ -187,7 +187,7 @@ export default function Dashboard({ setTab }) {
 
         <div className="bg-white border border-plum/10 rounded-xl p-5">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="font-display text-lg text-plum">Low Stock</h2>
+            <h2 className="font-display text-lg text-heading">Low Stock</h2>
             {lowStock.length > 0 && (
               <span className="text-xs font-mono text-ink/40">{lowStock.length} item{lowStock.length !== 1 ? "s" : ""}</span>
             )}

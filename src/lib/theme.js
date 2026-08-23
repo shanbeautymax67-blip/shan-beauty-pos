@@ -15,11 +15,13 @@ export const DEFAULT_THEME = {
   ink: "#241B22",
   gold: "#C9A15A",
   blush: "#F3D9E4",
+  heading: "#2B1024",
+  "sidebar-text": "#F3D9E4",
 };
 
 // Human-friendly grouping/labels for the Settings UI.
 export const THEME_FIELDS = [
-  { key: "plum", label: "Primary (Sidebar / Headings)" },
+  { key: "plum", label: "Primary (Sidebar Background)" },
   { key: "plum-light", label: "Primary — Light" },
   { key: "plum-dark", label: "Primary — Dark" },
   { key: "berry", label: "Accent (Buttons / Highlights)" },
@@ -29,6 +31,8 @@ export const THEME_FIELDS = [
   { key: "blush", label: "Blush Tint" },
   { key: "ivory", label: "Page Background" },
   { key: "ink", label: "Body Text" },
+  { key: "heading", label: "Headings" },
+  { key: "sidebar-text", label: "Sidebar Tab Text" },
 ];
 
 function hexToChannels(hex) {
