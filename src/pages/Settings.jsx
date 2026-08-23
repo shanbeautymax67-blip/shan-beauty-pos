@@ -179,6 +179,56 @@ export default function Settings() {
     }
   }
 
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [changingPassword, setChangingPassword] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState(null);
+
+  async function handleChangePassword() {
+    setPasswordMessage(null);
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      setPasswordMessage({ type: "error", text: "Fill in all three fields." });
+      return;
+    }
+    if (newPassword.length < 6) {
+      setPasswordMessage({ type: "error", text: "New password must be at least 6 characters." });
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setPasswordMessage({ type: "error", text: "New password and confirmation don't match." });
+      return;
+    }
+
+    setChangingPassword(true);
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    // Verify the current password before allowing the change.
+    const { error: verifyError } = await supabase.auth.signInWithPassword({
+      email: user.email,
+      password: currentPassword,
+    });
+    if (verifyError) {
+      setChangingPassword(false);
+      setPasswordMessage({ type: "error", text: "Current password is incorrect." });
+      return;
+    }
+
+    const { error: updateError } = await supabase.auth.updateUser({ password: newPassword });
+    setChangingPassword(false);
+    if (updateError) {
+      setPasswordMessage({ type: "error", text: "Couldn't update the password." });
+    } else {
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setPasswordMessage({ type: "success", text: "Password updated." });
+    }
+  }
+
   function previewTheme(next) {
     setTheme(next);
     applyTheme(next); // live preview as you pick colors, before saving
@@ -324,6 +374,54 @@ export default function Settings() {
             {usernameMessage.text}
           </p>
         )}
+
+        <div className="border-t border-plum/10 mt-4 pt-4">
+          <p className="text-sm text-ink font-medium mb-1">Change Password</p>
+          <p className="text-xs text-ink/50 mb-3">
+            Enter your current password to confirm it's you, then set a new one.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
+            <input
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              placeholder="Current password"
+              className="rounded-lg border border-plum/15 px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-berry"
+            />
+            <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="New password"
+              className="rounded-lg border border-plum/15 px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-berry"
+            />
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm new password"
+              className="rounded-lg border border-plum/15 px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-berry"
+            />
+          </div>
+          <button
+            onClick={handleChangePassword}
+            disabled={changingPassword}
+            className="px-4 py-2 rounded-lg bg-berry hover:bg-berry-light text-white text-sm font-medium disabled:opacity-50"
+          >
+            {changingPassword ? "Updating…" : "Update Password"}
+          </button>
+          {passwordMessage && (
+            <p
+              className={`text-xs rounded-lg px-3 py-2 mt-3 ${
+                passwordMessage.type === "error"
+                  ? "bg-berry/10 text-berry-dark"
+                  : "bg-green-50 text-green-700"
+              }`}
+            >
+              {passwordMessage.text}
+            </p>
+          )}
+        </div>
       </div>
 
       <div className="border border-plum/10 rounded-xl p-5 bg-white mb-6">
