@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
+import PasswordInput from "../components/PasswordInput";
 
 export default function ResetPassword({ onDone }) {
   const [newPassword, setNewPassword] = useState("");
@@ -48,26 +49,26 @@ export default function ResetPassword({ onDone }) {
             <label className="block text-xs font-mono text-blush/70 mb-1 uppercase tracking-wide">
               New Password
             </label>
-            <input
-              type="password"
+            <PasswordInput
               required
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               className="w-full rounded-lg bg-plum-dark border border-white/10 px-3 py-2 text-ivory focus:outline-none focus:ring-2 focus:ring-berry"
               placeholder="••••••••"
+              iconClassName="text-blush/60"
             />
           </div>
           <div>
             <label className="block text-xs font-mono text-blush/70 mb-1 uppercase tracking-wide">
               Confirm New Password
             </label>
-            <input
-              type="password"
+            <PasswordInput
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full rounded-lg bg-plum-dark border border-white/10 px-3 py-2 text-ivory focus:outline-none focus:ring-2 focus:ring-berry"
               placeholder="••••••••"
+              iconClassName="text-blush/60"
             />
           </div>
           {error && (

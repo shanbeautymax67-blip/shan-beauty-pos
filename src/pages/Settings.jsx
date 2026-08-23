@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import SetPinModal from "../components/SetPinModal";
 import VerifyPinModal from "../components/VerifyPinModal";
+import PasswordInput from "../components/PasswordInput";
 import { isPinSet } from "../lib/pinUtils";
 import { exportProductsToExcel, parseProductsExcelFile } from "../lib/productsIO";
 import { fetchAllRows } from "../lib/fetchAll";
@@ -381,22 +382,19 @@ export default function Settings() {
             Enter your current password to confirm it's you, then set a new one.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
-            <input
-              type="password"
+            <PasswordInput
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="Current password"
               className="rounded-lg border border-plum/15 px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-berry"
             />
-            <input
-              type="password"
+            <PasswordInput
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="New password"
               className="rounded-lg border border-plum/15 px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-berry"
             />
-            <input
-              type="password"
+            <PasswordInput
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm new password"

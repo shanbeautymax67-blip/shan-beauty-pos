@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
+import PasswordInput from "../components/PasswordInput";
 
 async function lookupEmailForUsername(rawUsername) {
   const { data, error } = await supabase
@@ -124,13 +125,13 @@ export default function Login() {
                   Forgot password?
                 </button>
               </div>
-              <input
-                type="password"
+              <PasswordInput
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-lg bg-plum-dark border border-white/10 px-3 py-2 text-ivory focus:outline-none focus:ring-2 focus:ring-berry"
                 placeholder="••••••••"
+                iconClassName="text-blush/60"
               />
             </div>
             {error && (
