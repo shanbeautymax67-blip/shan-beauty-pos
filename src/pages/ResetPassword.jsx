@@ -43,36 +43,36 @@ export default function ResetPassword({ onDone }) {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="bg-plum-light border border-white/10 rounded-2xl p-6 space-y-4"
+          className="bg-white border border-black/10 shadow-xl rounded-2xl p-6 space-y-4"
         >
           <div>
-            <label className="block text-xs font-mono text-blush/70 mb-1 uppercase tracking-wide">
+            <label className="block text-xs font-mono text-black mb-1 uppercase tracking-wide">
               New Password
             </label>
             <PasswordInput
               required
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full rounded-lg bg-plum-dark border border-white/10 px-3 py-2 text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-berry"
+              className="w-full rounded-lg bg-black/5 border border-black/15 px-3 py-2 text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-berry"
               placeholder="••••••••"
               iconClassName="text-black/50"
             />
           </div>
           <div>
-            <label className="block text-xs font-mono text-blush/70 mb-1 uppercase tracking-wide">
+            <label className="block text-xs font-mono text-black mb-1 uppercase tracking-wide">
               Confirm New Password
             </label>
             <PasswordInput
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full rounded-lg bg-plum-dark border border-white/10 px-3 py-2 text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-berry"
+              className="w-full rounded-lg bg-black/5 border border-black/15 px-3 py-2 text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-berry"
               placeholder="••••••••"
               iconClassName="text-black/50"
             />
           </div>
           {error && (
-            <p className="text-sm text-red-200 bg-red-950/40 border border-red-500/30 rounded-lg px-3 py-2">
+            <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
               {error}
             </p>
           )}

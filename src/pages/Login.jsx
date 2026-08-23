@@ -90,10 +90,10 @@ export default function Login() {
         {mode === "login" ? (
           <form
             onSubmit={handleSubmit}
-            className="bg-plum-light border border-white/10 rounded-2xl p-6 space-y-4"
+            className="bg-white border border-black/10 shadow-xl rounded-2xl p-6 space-y-4"
           >
             <div>
-              <label className="block text-xs font-mono text-blush/70 mb-1 uppercase tracking-wide">
+              <label className="block text-xs font-mono text-black mb-1 uppercase tracking-wide">
                 Username
               </label>
               <input
@@ -103,13 +103,13 @@ export default function Login() {
                 autoCorrect="off"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full rounded-lg bg-plum-dark border border-white/10 px-3 py-2 text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-berry"
+                className="w-full rounded-lg bg-black/5 border border-black/15 px-3 py-2 text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-berry"
                 placeholder="yourname"
               />
             </div>
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-mono text-blush/70 uppercase tracking-wide">
+                <label className="block text-xs font-mono text-black uppercase tracking-wide">
                   Password
                 </label>
                 <button
@@ -120,7 +120,7 @@ export default function Login() {
                     setResetMessage(null);
                     setResetUsername(username);
                   }}
-                  className="text-xs text-blush/90 hover:text-blush hover:underline"
+                  className="text-xs text-black hover:underline"
                 >
                   Forgot password?
                 </button>
@@ -129,13 +129,13 @@ export default function Login() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-lg bg-plum-dark border border-white/10 px-3 py-2 text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-berry"
+                className="w-full rounded-lg bg-black/5 border border-black/15 px-3 py-2 text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-berry"
                 placeholder="••••••••"
                 iconClassName="text-black/50"
               />
             </div>
             {error && (
-              <p className="text-sm text-red-200 bg-red-950/40 border border-red-500/30 rounded-lg px-3 py-2">
+              <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
                 {error}
               </p>
             )}
@@ -150,14 +150,14 @@ export default function Login() {
         ) : (
           <form
             onSubmit={handleSendReset}
-            className="bg-plum-light border border-white/10 rounded-2xl p-6 space-y-4"
+            className="bg-white border border-black/10 shadow-xl rounded-2xl p-6 space-y-4"
           >
-            <p className="text-sm text-blush/80">
+            <p className="text-sm text-black">
               Enter your username and we'll email a password reset link to the address on your
               account.
             </p>
             <div>
-              <label className="block text-xs font-mono text-blush/70 mb-1 uppercase tracking-wide">
+              <label className="block text-xs font-mono text-black mb-1 uppercase tracking-wide">
                 Username
               </label>
               <input
@@ -167,7 +167,7 @@ export default function Login() {
                 autoCorrect="off"
                 value={resetUsername}
                 onChange={(e) => setResetUsername(e.target.value)}
-                className="w-full rounded-lg bg-plum-dark border border-white/10 px-3 py-2 text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-berry"
+                className="w-full rounded-lg bg-black/5 border border-black/15 px-3 py-2 text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-berry"
                 placeholder="yourname"
               />
             </div>
@@ -175,8 +175,8 @@ export default function Login() {
               <p
                 className={`text-sm rounded-lg px-3 py-2 border ${
                   resetMessage.type === "error"
-                    ? "text-red-200 bg-red-950/40 border-red-500/30"
-                    : "text-blush bg-white/5 border-white/10"
+                    ? "text-red-700 bg-red-50 border-red-200"
+                    : "text-green-700 bg-green-50 border-green-200"
                 }`}
               >
                 {resetMessage.text}
@@ -195,7 +195,7 @@ export default function Login() {
                 setMode("login");
                 setResetMessage(null);
               }}
-              className="w-full text-center text-xs text-blush/90 hover:text-blush hover:underline"
+              className="w-full text-center text-xs text-black hover:underline"
             >
               Back to sign in
             </button>
