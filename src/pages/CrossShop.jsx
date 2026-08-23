@@ -50,7 +50,7 @@ export default function CrossShop() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="bg-white border border-plum/10 rounded-xl overflow-hidden">
-            <div className="bg-red-50 px-4 py-3">
+            <div className="bg-send-shop-a px-4 py-3">
               <h2 className="font-display text-base text-ink">Sent to Shop A</h2>
               <p className="text-xs text-ink font-mono">{sentOut.length} transfer{sentOut.length !== 1 ? "s" : ""}</p>
             </div>
@@ -74,7 +74,7 @@ export default function CrossShop() {
           </div>
 
           <div className="bg-white border border-plum/10 rounded-xl overflow-hidden">
-            <div className="bg-green-50 px-4 py-3">
+            <div className="bg-bring-shop-a px-4 py-3">
               <h2 className="font-display text-base text-ink">Brought from Shop A</h2>
               <p className="text-xs text-ink font-mono">{broughtIn.length} transfer{broughtIn.length !== 1 ? "s" : ""}</p>
             </div>

@@ -225,20 +225,20 @@ export default function Expenses() {
           <div className="overflow-auto max-h-[70vh]">
             <table className="text-sm border-collapse">
               <thead>
-                <tr className="bg-blush text-left text-ink font-mono text-xs uppercase">
-                  <th className="px-4 py-3 sticky top-0 left-0 z-30 bg-blush whitespace-nowrap border-r border-b border-plum/10">
+                <tr className="bg-plum text-left text-sidebar-text font-mono text-xs uppercase">
+                  <th className="px-4 py-3 sticky top-0 left-0 z-30 bg-plum whitespace-nowrap border-r border-b border-plum/10">
                     Date
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum border-b border-plum/10 whitespace-nowrap">
                     Type
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum border-b border-plum/10 whitespace-nowrap">
                     Description
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 text-right whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum border-b border-plum/10 text-right whitespace-nowrap">
                     Amount
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 whitespace-nowrap"></th>
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum border-b border-plum/10 whitespace-nowrap"></th>
                 </tr>
               </thead>
               <tbody>

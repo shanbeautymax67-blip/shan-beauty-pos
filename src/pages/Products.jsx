@@ -276,29 +276,29 @@ export default function Products() {
           <div className="overflow-auto max-h-[70vh]">
             <table className="text-sm border-collapse">
               <thead>
-                <tr className="bg-blush text-left text-ink font-mono text-xs uppercase">
-                  <th className="px-4 py-3 sticky top-0 left-0 z-30 bg-blush border-r border-b border-plum/10 w-40">
+                <tr className="bg-plum text-left text-sidebar-text font-mono text-xs uppercase">
+                  <th className="px-4 py-3 sticky top-0 left-0 z-30 bg-plum border-r border-b border-plum/10 w-40">
                     Name
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum border-b border-plum/10 whitespace-nowrap">
                     Category
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 text-right whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum border-b border-plum/10 text-right whitespace-nowrap">
                     Buying Price
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 text-right whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum border-b border-plum/10 text-right whitespace-nowrap">
                     Selling Price
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 text-right whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum border-b border-plum/10 text-right whitespace-nowrap">
                     Margin
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 text-right whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum border-b border-plum/10 text-right whitespace-nowrap">
                     Stock
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 text-right whitespace-nowrap">
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum border-b border-plum/10 text-right whitespace-nowrap">
                     Reorder Level
                   </th>
-                  <th className="px-4 py-3 sticky top-0 z-20 bg-blush border-b border-plum/10 whitespace-nowrap"></th>
+                  <th className="px-4 py-3 sticky top-0 z-20 bg-plum border-b border-plum/10 whitespace-nowrap"></th>
                 </tr>
               </thead>
               <tbody>
