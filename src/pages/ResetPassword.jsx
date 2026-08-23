@@ -53,9 +53,9 @@ export default function ResetPassword({ onDone }) {
               required
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full rounded-lg bg-plum-dark border border-white/10 px-3 py-2 text-ivory focus:outline-none focus:ring-2 focus:ring-berry"
+              className="w-full rounded-lg bg-plum-dark border border-white/10 px-3 py-2 text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-berry"
               placeholder="••••••••"
-              iconClassName="text-blush/60"
+              iconClassName="text-black/50"
             />
           </div>
           <div>
@@ -66,9 +66,9 @@ export default function ResetPassword({ onDone }) {
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full rounded-lg bg-plum-dark border border-white/10 px-3 py-2 text-ivory focus:outline-none focus:ring-2 focus:ring-berry"
+              className="w-full rounded-lg bg-plum-dark border border-white/10 px-3 py-2 text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-berry"
               placeholder="••••••••"
-              iconClassName="text-blush/60"
+              iconClassName="text-black/50"
             />
           </div>
           {error && (
