@@ -186,7 +186,7 @@ export default function Financials() {
               </div>
               <div className="flex justify-between font-semibold pt-2 border-t border-plum/10">
                 <span className="text-ink">Cash for Today + Yesterday's Cash Left</span>
-                <span className="font-mono text-plum">{money(cashForToday)}</span>
+                <span className="font-mono text-totals">{money(cashForToday)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-ink">− Today's Cash Left (set aside for tomorrow)</span>

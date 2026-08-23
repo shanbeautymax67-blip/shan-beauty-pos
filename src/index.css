@@ -16,6 +16,7 @@
     --color-blush: 243 217 228;
     --color-heading: 43 16 36;
     --color-sidebar-text: 243 217 228;
+    --color-totals: 43 16 36;
   }
   html, body, #root {
     height: 100%;

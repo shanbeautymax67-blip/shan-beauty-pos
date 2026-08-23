@@ -17,6 +17,7 @@ export const DEFAULT_THEME = {
   blush: "#F3D9E4",
   heading: "#2B1024",
   "sidebar-text": "#F3D9E4",
+  totals: "#2B1024",
 };
 
 // Human-friendly grouping/labels for the Settings UI.
@@ -33,6 +34,7 @@ export const THEME_FIELDS = [
   { key: "ink", label: "Body Text" },
   { key: "heading", label: "Headings" },
   { key: "sidebar-text", label: "Sidebar Tab Text" },
+  { key: "totals", label: "Totals (Cart, Cash Summaries)" },
 ];
 
 function hexToChannels(hex) {

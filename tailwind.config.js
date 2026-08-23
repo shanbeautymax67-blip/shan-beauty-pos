@@ -20,6 +20,7 @@ export default {
         blush: "rgb(var(--color-blush) / <alpha-value>)",
         heading: "rgb(var(--color-heading) / <alpha-value>)",
         "sidebar-text": "rgb(var(--color-sidebar-text) / <alpha-value>)",
+        totals: "rgb(var(--color-totals) / <alpha-value>)",
       },
       fontFamily: {
         display: ["Inter", "sans-serif"],

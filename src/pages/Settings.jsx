@@ -31,6 +31,7 @@ const PRESETS = [
       blush: "#D6F0EC",
       heading: "#0B3B4A",
       "sidebar-text": "#D6F0EC",
+      totals: "#0B3B4A",
     },
   },
   {
@@ -48,6 +49,7 @@ const PRESETS = [
       blush: "#FCE0D2",
       heading: "#4A1230",
       "sidebar-text": "#FCE0D2",
+      totals: "#4A1230",
     },
   },
   {
@@ -65,6 +67,7 @@ const PRESETS = [
       blush: "#DCF3E3",
       heading: "#122B1E",
       "sidebar-text": "#DCF3E3",
+      totals: "#122B1E",
     },
   },
   {
@@ -82,6 +85,7 @@ const PRESETS = [
       blush: "#E8DFFB",
       heading: "#2A1B54",
       "sidebar-text": "#E8DFFB",
+      totals: "#2A1B54",
     },
   },
   {
@@ -99,6 +103,7 @@ const PRESETS = [
       ink: "#000000",
       heading: "#7C0E6D",
       "sidebar-text": "#FFFFFF",
+      totals: "#7C0E6D",
     },
   },
 ];

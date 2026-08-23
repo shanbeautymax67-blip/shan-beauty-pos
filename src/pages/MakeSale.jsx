@@ -477,7 +477,7 @@ export default function MakeSale() {
             </div>
           )}
 
-          <div className="flex justify-between font-display text-2xl text-plum">
+          <div className="flex justify-between font-display text-2xl text-totals">
             <span>Total</span>
             <span>{money(total)}</span>
           </div>
