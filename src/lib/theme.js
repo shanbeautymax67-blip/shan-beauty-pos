@@ -18,6 +18,8 @@ export const DEFAULT_THEME = {
   heading: "#2B1024",
   "sidebar-text": "#F3D9E4",
   totals: "#2B1024",
+  "send-shop-a": "#FEF2F2",
+  "bring-shop-a": "#F0FDF4",
 };
 
 // Human-friendly grouping/labels for the Settings UI.
@@ -35,6 +37,8 @@ export const THEME_FIELDS = [
   { key: "heading", label: "Headings" },
   { key: "sidebar-text", label: "Sidebar Tab Text" },
   { key: "totals", label: "Totals (Cart, Cash Summaries)" },
+  { key: "send-shop-a", label: "\"Send to Shop A\" Button Fill" },
+  { key: "bring-shop-a", label: "\"Bring from Shop A\" Button Fill" },
 ];
 
 function hexToChannels(hex) {

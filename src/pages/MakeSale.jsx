@@ -348,7 +348,7 @@ export default function MakeSale() {
                       <button
                         type="button"
                         onClick={() => setTransfer({ product: p, direction: "to_shop_a" })}
-                        className="flex-1 text-[10px] font-mono uppercase tracking-wide text-ink py-1 rounded bg-red-50 hover:bg-red-100"
+                        className="flex-1 text-[10px] font-mono uppercase tracking-wide text-ink py-1 rounded bg-send-shop-a hover:opacity-80 transition-opacity"
                       >
                         Send to Shop A
                       </button>
@@ -357,7 +357,7 @@ export default function MakeSale() {
                       <button
                         type="button"
                         onClick={() => setTransfer({ product: p, direction: "from_shop_a" })}
-                        className="flex-1 text-[10px] font-mono uppercase tracking-wide text-ink py-1 rounded bg-green-50 hover:bg-green-100"
+                        className="flex-1 text-[10px] font-mono uppercase tracking-wide text-ink py-1 rounded bg-bring-shop-a hover:opacity-80 transition-opacity"
                       >
                         Bring from Shop A
                       </button>

@@ -138,7 +138,9 @@ export default function Settings() {
   }
 
   function applyPreset(preset) {
-    previewTheme({ ...preset });
+    // Merge over defaults so tokens a preset doesn't define (e.g. newly
+    // added ones) don't just disappear from the theme.
+    previewTheme({ ...DEFAULT_THEME, ...preset });
   }
 
   async function handleSaveTheme() {

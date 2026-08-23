@@ -21,6 +21,8 @@ export default {
         heading: "rgb(var(--color-heading) / <alpha-value>)",
         "sidebar-text": "rgb(var(--color-sidebar-text) / <alpha-value>)",
         totals: "rgb(var(--color-totals) / <alpha-value>)",
+        "send-shop-a": "rgb(var(--color-send-shop-a) / <alpha-value>)",
+        "bring-shop-a": "rgb(var(--color-bring-shop-a) / <alpha-value>)",
       },
       fontFamily: {
         display: ["Inter", "sans-serif"],

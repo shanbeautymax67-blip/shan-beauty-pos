@@ -152,14 +152,15 @@ export default function Dashboard({ setTab }) {
 
       <h2 className="font-display text-xl text-heading mb-4">This Month — {monthName}</h2>
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-10">
-        <StatCard label="Sales" value={monthly.saleCount} />
-        <StatCard label="Total Sales" value={money(monthly.revenue)} />
-        <StatCard label="Gross Profit" value={money(monthly.grossProfit)} tone="green" />
-        <StatCard label="Expenses" value={money(monthly.expensesTotal)} tone="berry" />
+        <StatCard label="Sales" value={monthly.saleCount} blackLabel />
+        <StatCard label="Total Sales" value={money(monthly.revenue)} blackLabel />
+        <StatCard label="Gross Profit" value={money(monthly.grossProfit)} tone="green" blackLabel />
+        <StatCard label="Expenses" value={money(monthly.expensesTotal)} tone="berry" blackLabel />
         <StatCard
           label="Net Profit"
           value={money(monthly.netProfit)}
           tone={monthly.netProfit >= 0 ? "green" : "berry"}
+          blackLabel
         />
       </div>
 
@@ -226,18 +227,13 @@ export default function Dashboard({ setTab }) {
   );
 }
 
-function StatCard({ label, value, tone, boldLabel }) {
+function StatCard({ label, value, tone, boldLabel, blackLabel }) {
   const toneClass =
     tone === "green" ? "text-green-700" : tone === "berry" ? "text-berry-dark" : "text-ink";
+  const labelClass = blackLabel ? "text-black" : boldLabel ? "text-ink" : "text-ink/40";
   return (
     <div className="rounded-xl p-4 border bg-white border-plum/10">
-      <p
-        className={`text-xs font-mono uppercase tracking-wide mb-1 ${
-          boldLabel ? "text-ink" : "text-ink/40"
-        }`}
-      >
-        {label}
-      </p>
+      <p className={`text-xs font-mono uppercase tracking-wide mb-1 ${labelClass}`}>{label}</p>
       <p className={`font-display text-xl ${toneClass}`}>{value}</p>
     </div>
   );
@@ -246,9 +242,9 @@ function StatCard({ label, value, tone, boldLabel }) {
 function CashMpesaCard({ cash, mpesa }) {
   return (
     <div className="rounded-xl p-4 border bg-white border-plum/10">
-      <p className="text-xs font-mono uppercase tracking-wide mb-1 text-ink/40">Cash / M-Pesa</p>
-      <p className="font-display text-base text-ink leading-snug">Cash: {money(cash)}</p>
-      <p className="font-display text-base text-ink leading-snug">M-Pesa: {money(mpesa)}</p>
+      <p className="text-xs font-mono uppercase tracking-wide mb-1 text-black">Cash / M-Pesa</p>
+      <p className="font-display text-base text-green-700 leading-snug">Cash: {money(cash)}</p>
+      <p className="font-display text-base text-blue-700 leading-snug">M-Pesa: {money(mpesa)}</p>
     </div>
   );
 }
