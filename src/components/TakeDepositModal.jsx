@@ -58,7 +58,7 @@ export default function TakeDepositModal({ total, onClose, onConfirm }) {
 
         <div className="flex justify-between text-sm font-mono mb-4 bg-plum/5 rounded-lg px-3 py-2">
           <span className="text-ink/60">Total price</span>
-          <span className="text-ink font-semibold">{money(total)}</span>
+          <span className="text-blue-700 font-semibold">{money(total)}</span>
         </div>
 
         <label className="block text-xs font-mono text-ink/50 mb-1 uppercase">
@@ -159,7 +159,7 @@ export default function TakeDepositModal({ total, onClose, onConfirm }) {
         {depositAmount > 0 && (
           <div className="flex justify-between text-sm font-mono mb-3">
             <span className="text-ink/50">Balance remaining</span>
-            <span className={balanceAfter > 0 ? "text-berry-dark font-semibold" : "text-green-700 font-semibold"}>
+            <span className={balanceAfter > 0 ? "text-red-600 font-semibold" : "text-green-700 font-semibold"}>
               {money(balanceAfter)}
             </span>
           </div>

@@ -173,9 +173,9 @@ export default function Deposits() {
                     </p>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="font-mono text-sm text-ink">{money(d.total)}</p>
+                    <p className="font-mono text-sm font-semibold text-blue-700">{money(d.total)}</p>
                     {d.status === "pending" ? (
-                      <p className="text-[11px] font-medium text-berry-dark mt-0.5">
+                      <p className="text-[11px] font-semibold text-red-600 mt-0.5">
                         {money(balance)} due
                       </p>
                     ) : d.status === "completed" ? (
@@ -197,7 +197,7 @@ export default function Deposits() {
                             <span className="text-ink/70">
                               {it.quantity} × {it.product_name}
                             </span>
-                            <span className="font-mono text-ink/70">{money(it.line_total)}</span>
+                            <span className="font-mono text-blue-700">{money(it.line_total)}</span>
                           </div>
                         ))}
                       </div>
@@ -206,12 +206,12 @@ export default function Deposits() {
                     <div className="space-y-1 text-sm font-mono mb-4">
                       <div className="flex justify-between text-ink/60">
                         <span>Paid so far</span>
-                        <span>{money(d.amount_paid)}</span>
+                        <span className="text-green-700 font-semibold">{money(d.amount_paid)}</span>
                       </div>
                       {d.status === "pending" && (
                         <div className="flex justify-between text-ink font-semibold">
                           <span>Balance due</span>
-                          <span>{money(balance)}</span>
+                          <span className="text-red-600">{money(balance)}</span>
                         </div>
                       )}
                     </div>

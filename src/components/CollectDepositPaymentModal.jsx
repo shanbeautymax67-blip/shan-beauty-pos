@@ -56,15 +56,15 @@ export default function CollectDepositPaymentModal({ depositSale, onClose, onCon
         <div className="space-y-1 text-sm font-mono mb-4 bg-plum/5 rounded-lg px-3 py-2">
           <div className="flex justify-between text-ink/60">
             <span>Total price</span>
-            <span>{money(depositSale.total)}</span>
+            <span className="text-blue-700 font-semibold">{money(depositSale.total)}</span>
           </div>
           <div className="flex justify-between text-ink/60">
             <span>Already paid</span>
-            <span>{money(depositSale.amount_paid)}</span>
+            <span className="text-green-700 font-semibold">{money(depositSale.amount_paid)}</span>
           </div>
           <div className="flex justify-between text-ink font-semibold pt-1 border-t border-plum/10">
             <span>Balance due</span>
-            <span>{money(balance)}</span>
+            <span className="text-red-600">{money(balance)}</span>
           </div>
         </div>
 
