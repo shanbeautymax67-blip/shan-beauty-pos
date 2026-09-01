@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import TransferModal from "../components/TransferModal";
+import TakeDepositModal from "../components/TakeDepositModal";
 import { fetchAllRows } from "../lib/fetchAll";
 
 const money = (n) => `KES ${Number(n).toFixed(2)}`;
@@ -21,6 +22,7 @@ export default function MakeSale() {
   const [message, setMessage] = useState(null);
   const [transfer, setTransfer] = useState(null); // { product, direction }
   const [mobileView, setMobileView] = useState("products"); // "products" | "cart" (small screens only)
+  const [showDepositModal, setShowDepositModal] = useState(false);
 
   async function loadProducts() {
     setLoading(true);
@@ -259,6 +261,40 @@ export default function MakeSale() {
     switchPayment("cash");
     loadProducts();
     setSaving(false);
+  }
+
+  async function handleTakeDeposit({ customerName, customerPhone, cashAmount, mpesaAmount }) {
+    if (cart.length === 0) return { error: "Cart is empty." };
+
+    for (const item of cart) {
+      const product = products.find((p) => p.id === item.product_id);
+      if (product && item.quantity > Number(product.stock)) {
+        return { error: `Not enough stock for "${item.name}".` };
+      }
+    }
+
+    const items = cart.map((i) => ({ product_id: i.product_id, quantity: i.quantity }));
+
+    const { error } = await supabase.rpc("create_deposit_sale", {
+      p_customer_name: customerName || null,
+      p_customer_phone: customerPhone || null,
+      p_discount: discountAmount,
+      p_cash_amount: cashAmount,
+      p_mpesa_amount: mpesaAmount,
+      p_items: items,
+    });
+
+    if (error) return { error: error.message };
+
+    setShowDepositModal(false);
+    setMessage({
+      type: "success",
+      text: `Deposit recorded for ${money(cashAmount + mpesaAmount)}. Item(s) reserved — find it under Deposits to collect the rest.`,
+    });
+    setCart([]);
+    setDiscount("");
+    loadProducts();
+    return {};
   }
 
   return (
@@ -590,6 +626,13 @@ export default function MakeSale() {
           >
             {saving ? "Processing…" : "Complete Sale"}
           </button>
+          <button
+            onClick={() => setShowDepositModal(true)}
+            disabled={cart.length === 0 || saving}
+            className="w-full rounded-lg border border-berry text-berry-dark hover:bg-berry/5 disabled:opacity-40 font-semibold py-2.5 transition-colors"
+          >
+            Take Deposit Instead
+          </button>
         </div>
       </div>
 
@@ -599,6 +642,14 @@ export default function MakeSale() {
           direction={transfer.direction}
           onClose={() => setTransfer(null)}
           onConfirm={handleTransferConfirm}
+        />
+      )}
+
+      {showDepositModal && (
+        <TakeDepositModal
+          total={total}
+          onClose={() => setShowDepositModal(false)}
+          onConfirm={handleTakeDeposit}
         />
       )}
     </div>

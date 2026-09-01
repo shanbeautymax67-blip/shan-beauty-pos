@@ -6,6 +6,7 @@ const NAV = [
   { id: "products", label: "Products", icon: "🏷" },
   { id: "sale", label: "Make Sale", icon: "🛍" },
   { id: "history", label: "Sales History", icon: "🧾" },
+  { id: "deposits", label: "Deposits", icon: "🤝" },
   { id: "crossshop", label: "Cross-Shop", icon: "🔄" },
   { id: "expenses", label: "Expenses", icon: "💸" },
   { id: "reports", label: "Reports", icon: "📈" },

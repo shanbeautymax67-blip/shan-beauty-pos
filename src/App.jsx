@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import MakeSale from "./pages/MakeSale";
 import Products from "./pages/Products";
 import SalesHistory from "./pages/SalesHistory";
+import Deposits from "./pages/Deposits";
 import Dashboard from "./pages/Dashboard";
 import Expenses from "./pages/Expenses";
 import Reports from "./pages/Reports";
@@ -57,6 +58,7 @@ export default function App() {
         {tab === "sale" && <MakeSale />}
         {tab === "products" && <Products />}
         {tab === "history" && <SalesHistory />}
+        {tab === "deposits" && <Deposits />}
         {tab === "expenses" && <Expenses />}
         {tab === "reports" && <Reports />}
         {tab === "financials" && <Financials />}
