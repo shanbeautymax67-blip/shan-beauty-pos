@@ -65,16 +65,18 @@ export async function parseProductsExcelFile(file) {
       errors.push(`Row ${idx + 2}: missing product name — skipped.`);
       return;
     }
-    if (price === undefined || isNaN(Number(price))) {
-      errors.push(`Row ${idx + 2} ("${name}"): missing or invalid Selling Price — skipped.`);
-      return;
+    // A price of 0 (or a blank/invalid price) is allowed — it just means the
+    // product is free or its price hasn't been set yet. Only a missing name
+    // causes a row to be skipped.
+    if (price !== undefined && isNaN(Number(price))) {
+      errors.push(`Row ${idx + 2} ("${name}"): invalid Selling Price "${price}" — imported as 0.`);
     }
 
     rows.push({
       name: String(name).trim(),
       category: category ? String(category).trim() : null,
       buying_price: Number(buyingPrice) || 0,
-      price: Number(price),
+      price: Number(price) || 0,
       stock: Number(stock) || 0,
       reorder_level:
         reorderLevel !== undefined && !isNaN(Number(reorderLevel)) ? Number(reorderLevel) : 5,
